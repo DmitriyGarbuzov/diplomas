@@ -1,0 +1,15 @@
+src/hibernate.cfg.xml
+*.class
+/metamodels/
+.apt_generated/
+WebContent/WEB-INF/classes/
+node_modules
+.settings
+/PurchasePortal.war
+*.cfg.xml~
+/nbproject
+WebContent/images/Thumbs.db
+target/
+.project
+README.md
+.classpath
