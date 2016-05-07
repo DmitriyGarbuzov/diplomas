@@ -75,10 +75,8 @@ public class GraduateWorkDTO {
     }
 
     @Override
-    public String toString() {
-	return "GraduateWorkDTO [id=" + id + ", subject=" + subject
-		+ ", selfHref=" + selfHref + ", year=" + year + ", student="
-		+ student + ", degree=" + degree + ", headWork=" + headWork
-		+ "]";
-    }
+	public String toString() {
+		return "GraduateWorkDTO [uuid=" + uuid + ", subject=" + subject + ", selfHref=" + selfHref + ", year=" + year
+				+ ", student=" + student + ", degree=" + degree + ", headWork=" + headWork + "]";
+	}
 }

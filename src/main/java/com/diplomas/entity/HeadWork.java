@@ -59,9 +59,9 @@ public class HeadWork extends BaseEntity{
     }
 
     @Override
-    public String toString() {
-	return "HeadWork [firstName=" + firstName + ", patronymic="
-		+ patronymic + ", surname=" + surname + "]";
-    }
+	public String toString() {
+		return "HeadWork [uuid=" + uuid + ", firstName=" + firstName + ", patronymic=" + patronymic + ", surname="
+				+ surname + "]";
+	}
     
 }

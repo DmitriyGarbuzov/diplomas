@@ -97,9 +97,8 @@ public class GraduateWork extends BaseEntity{
     }
 
     @Override
-    public String toString() {
-	return "GraduateWork [subject=" + subject + ", selfHref=" + selfHref
-		+ ", year=" + year + ", student=" + student + ", degree="
-		+ degree + ", headWork=" + headWork + "]";
-    }
+	public String toString() {
+		return "GraduateWork [uuid=" + uuid + ", subject=" + subject + ", selfHref=" + selfHref + ", year=" + year
+				+ ", student=" + student + ", degree=" + degree + ", headWork=" + headWork + "]";
+	}
 }

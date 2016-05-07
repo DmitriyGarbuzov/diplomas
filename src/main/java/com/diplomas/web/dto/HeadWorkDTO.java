@@ -45,8 +45,8 @@ public class HeadWorkDTO {
     }
 
     @Override
-    public String toString() {
-	return "HeadWorkDTO [id=" + id + ", firstName=" + firstName
-		+ ", patronymic=" + patronymic + ", surname=" + surname + "]";
-    }
+	public String toString() {
+		return "HeadWorkDTO [uuid=" + uuid + ", firstName=" + firstName + ", patronymic=" + patronymic + ", surname="
+				+ surname + "]";
+	}
 }
