@@ -1,6 +1,7 @@
 package com.diplomas.repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
@@ -16,7 +17,9 @@ public interface GraduateWorkRepository extends JpaRepository<GraduateWork, Long
     
     List<GraduateWork> findAllByDegreeId(Long degreeId);
     
+    GraduateWork findOneByUuid(UUID uuid);
+    
     @Modifying
     @Transactional
-    Long deleteByUUID(UUID uuid);
+    Long deleteByUuid(UUID uuid);
 }

@@ -32,28 +32,36 @@ public class GraduateWorkService {
 		.collect(Collectors.toList());
     }
     
-    public GraduateWorkDTO saveGraduateWork(GraduateWorkDTO dto) {
-	return Optional.ofNullable(
-		graduateWorkRepository.save(
-			graduateWorkConverter.reverse().convert(dto)
-			)
-	).map(graduateWorkConverter::convert)
-	.orElse(null);
-    }
+	public GraduateWorkDTO saveGraduateWork(GraduateWorkDTO dto) {
+		return Optional.ofNullable(
+				graduateWorkRepository.save(graduateWorkConverter.reverse().convert(dto))
+				)
+				.map(graduateWorkConverter::convert)
+				.orElse(null);
+	}
     
     public GraduateWorkDTO updateGraduateWork(GraduateWorkDTO dto) {
-	//TODO : impl
-	return null;
+    	//TODO: implement update in Google Drive
+    	return null;
     }
     
-    public void deleteGraduateWork(UUID uuid){
-	graduateWorkRepository.deleteByUUID(uuid);
+    public GraduateWorkDTO getGraduateWork(UUID uuid) {
+    	return Optional.ofNullable(
+    			graduateWorkRepository.findOneByUuid(uuid)
+    			)
+    			.map(graduateWorkConverter::convert)
+    			.orElse(null);
     }
+    
+	public void deleteGraduateWork(UUID uuid) {
+		//TODO: implement remove from Google Drive
+		graduateWorkRepository.deleteByUuid(uuid);
+	}
     
     public List<GraduateWorkDTO> searchGraduateWorks(String text) {
-	return googleDriveService.searchGraduateWorks(text)
-		.stream()
-		.map(graduateWorkConverter::convert)
-		.collect(Collectors.toList());
+    	return googleDriveService.searchGraduateWorks(text)
+    			.stream()
+    			.map(graduateWorkConverter::convert)
+    			.collect(Collectors.toList());
     }
 }

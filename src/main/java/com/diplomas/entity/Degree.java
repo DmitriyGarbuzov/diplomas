@@ -10,11 +10,11 @@ import javax.persistence.Transient;
 public class Degree extends BaseEntity {
     
     @Transient
-    public final Long MASTER_DEGREE_PK = 1L;
+    public final static Long MASTER_DEGREE_PK = 1L;
     @Transient
-    public final Long BACHELOR_DEGREE_PK = 2L;
+    public final static Long BACHELOR_DEGREE_PK = 2L;
     @Transient
-    public final Long SPECIALIST_DEGREE_PK = 3L;
+    public final static Long SPECIALIST_DEGREE_PK = 3L;
     
     
     @Column(name = "degree_key", nullable = false)
