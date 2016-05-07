@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.loginPage("/login").permitAll()
 		.and()
 		.logout().permitAll();
+		//TODO: must be changed after implementing Spring Security Full!
 	}
 
 	@Autowired
