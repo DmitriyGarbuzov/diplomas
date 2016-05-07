@@ -2,6 +2,8 @@ package com.diplomas.controller;
 
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,12 +11,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.diplomas.Application;
 import com.diplomas.entity.Degree;
 import com.diplomas.service.GraduateWorkService;
 
 @Controller
 public class MainController {
-
+	
+	private static final Logger logger = LoggerFactory
+			.getLogger(Application.class);
+	
 	@Autowired
 	private GraduateWorkService graduateWorkService;
 	
@@ -50,6 +56,7 @@ public class MainController {
 	}
 
 	private String graduateWorkList(Model model, Long degreeId) {
+		logger.debug("Get all graduate works with degree_id = {}",degreeId);
 		model.addAttribute("graduateWorkList", graduateWorkService.getGraduateWorksByDegreePK(degreeId));
 		return "graduateworks";
 	}
