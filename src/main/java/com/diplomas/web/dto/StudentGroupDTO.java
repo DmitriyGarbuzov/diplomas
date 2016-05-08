@@ -6,8 +6,6 @@ public class StudentGroupDTO {
     
     private String groupName;
     
-    private CathedraDTO cathedra;
-    
     public Long getId() {
         return id;
     }
@@ -24,19 +22,8 @@ public class StudentGroupDTO {
         this.groupName = groupName;
     }
 
-    public CathedraDTO getCathedra() {
-        return cathedra;
-    }
-
-    public void setCathedra(CathedraDTO cathedra) {
-        this.cathedra = cathedra;
-    }
-
-    @Override
-    public String toString() {
-	return "StudentGroupDTO [groupName=" + groupName + ", cathedra="
-		+ cathedra + "]";
-    } 
-    
-    
+	@Override
+	public String toString() {
+		return "StudentGroupDTO [id=" + id + ", groupName=" + groupName + "]";
+	}
 }

@@ -12,10 +12,6 @@ public class StudentDTO {
 
     private String surname;
     
-    private StudentGroupDTO group;
-    
-    private HeadWorkDTO headWork;
-    
     public UUID getUuid() {
         return uuid;
     }
@@ -48,28 +44,9 @@ public class StudentDTO {
         this.surname = surname;
     }
 
-    public StudentGroupDTO getGroup() {
-        return group;
-    }
-
-    public void setGroup(StudentGroupDTO group) {
-        this.group = group;
-    }
-
-    public HeadWorkDTO getHeadWork() {
-        return headWork;
-    }
-
-    public void setHeadWork(HeadWorkDTO headWork) {
-        this.headWork = headWork;
-    }
-
-    @Override
-    public String toString() {
-	return "StudentDTO [firstName=" + firstName + ", patronymic="
-		+ patronymic + ", surname=" + surname + ", group=" + group
-		+ ", headWork=" + headWork + "]";
-    }
-    
-    
+	@Override
+	public String toString() {
+		return "StudentDTO [uuid=" + uuid + ", firstName=" + firstName + ", patronymic=" + patronymic + ", surname="
+				+ surname + "]";
+	}
 }

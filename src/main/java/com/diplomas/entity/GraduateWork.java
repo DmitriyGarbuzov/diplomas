@@ -40,6 +40,14 @@ public class GraduateWork extends BaseEntity{
     private Degree degree;
     
     @ManyToOne
+    @JoinColumn(name = "cathedra_id", nullable = false)
+    private Cathedra cathedra;
+    
+    @ManyToOne
+    @JoinColumn(name = "student_group_id", nullable = false)
+    private StudentGroup group;
+    
+    @ManyToOne
     @JoinColumn(name = "head_work_id", nullable = false)
     private HeadWork headWork;
     
@@ -90,8 +98,24 @@ public class GraduateWork extends BaseEntity{
     public void setStudent(Student student) {
         this.student = student;
     }
+    
+    public Cathedra getCathedra() {
+		return cathedra;
+	}
 
-    public Degree getDegree() {
+	public void setCathedra(Cathedra cathedra) {
+		this.cathedra = cathedra;
+	}
+	
+	public StudentGroup getGroup() {
+		return group;
+	}
+
+	public void setGroup(StudentGroup group) {
+		this.group = group;
+	}
+
+	public Degree getDegree() {
         return degree;
     }
 

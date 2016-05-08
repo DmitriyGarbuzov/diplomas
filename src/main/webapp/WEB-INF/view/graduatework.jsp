@@ -51,10 +51,10 @@
 	<c:url var="saveUpdateAction" value="/save"></c:url>
 	<div class="container">
 		<c:if test="${!empty graduateWork.uuid}">
-			<h2>Редактирование</h2>
+			<h2>Редагування</h2>
 		</c:if>
 		<c:if test="${empty graduateWork.uuid}">
-			<h2>Добавление</h2>
+			<h2>Створення</h2>
 		</c:if>
 		<form:form role="form" action="${saveUpdateAction}" method="POST"
 			commandName="graduateWork">
@@ -64,56 +64,65 @@
 					id="subject" required="true" />
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-2 form-control-label" for="datepicker">Год:</label>
+				<label class="col-sm-2 form-control-label" for="datepicker">Рік:</label>
 				<form:input path="year" type="text" class="form-control"
 					id="datepicker" required="true" />
 			</div>
 			<h3>Студент</h3>
 			<div class="form-group row">
-				<label class="col-sm-2 form-control-label" for="st_name">Имя:</label>
-				<form:input path="student.firstName" type="text"
-					class="form-control" id="st_name" required="true" />
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-2 form-control-label" for="st_surname">Фамилия:</label>
+				<label class="col-sm-2 form-control-label" for="st_surname">Фамілія:</label>
 				<form:input path="student.surname" type="text" class="form-control"
 					id="st_surname" required="true" />
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-2 form-control-label" for="st_patronymic">Отчество:</label>
+				<label class="col-sm-2 form-control-label" for="st_name">Ім'я:</label>
+				<form:input path="student.firstName" type="text"
+					class="form-control" id="st_name" required="true" />
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 form-control-label" for="st_patronymic">По
+					батькові:</label>
 				<form:input path="student.patronymic" type="text"
 					class="form-control" id="st_patronymic" required="true" />
 			</div>
 			<fieldset class="form-group">
-				<label lass="col-sm-2 form-control-label" for="degree">Степень</label>
-				<form:select path="degree" items="${degress}" class="form-control"
-					itemLabel="degreeName" id="degree" />
+				<label lass="col-sm-2 form-control-label" for="degree_s">Ступінь</label>
+				<form:select path="degree.id" id="degree_s" class="form-control">
+					<c:forEach var="degr" items="${degress}">
+						<option value="${degr.id}">${degr.degreeName}</option>
+					</c:forEach>
+				</form:select>
 			</fieldset>
 			<fieldset class="form-group">
-				<label lass="col-sm-2 form-control-label" for="cathedra">Кафедра</label>
-				<form:select path="student.group.cathedra" items="${cathedras}"
-					itemLabel="cathedraName" class="form-control" id="cathedra" />
+				<label lass="col-sm-2 form-control-label" for="cathedra_s">Кафедра</label>
+				<form:select path="cathedra.id" id="degree_s" class="form-control">
+					<c:forEach var="cathedra" items="${cathedras}">
+						<option value="${cathedra.id}">${cathedra.cathedraName}</option>
+					</c:forEach>
+				</form:select>
+				<%-- <form:select path="cathedra" items="${cathedras}"
+					itemValue="cathedra" itemLabel="cathedraName" class="form-control"
+					id="cathedra_s" /> --%>
 			</fieldset>
 			<div class="form-group row">
-				<label class="col-sm-2 form-control-label" for="st_group">Группа:</label>
-				<form:input path="student.group.groupName" type="text"
-					class="form-control" id="st_group" />
+				<label class="col-sm-2 form-control-label" for="st_group">Група:</label>
+				<form:input path="group.groupName" type="text" class="form-control"
+					id="st_group" />
 			</div>
-			<h3>Руководитель</h3>
+			<h3>Керівник</h3>
 			<div class="form-group row">
-				<label class="col-sm-2 form-control-label" for="hw_name">Имя:</label>
-				<form:input path="headWork.firstName" type="text"
-					class="form-control" id="hw_name" />
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-2 form-control-label" for="hw_surname">Фамилия:</label>
+				<label class="col-sm-2 form-control-label" for="hw_surname">Фамілія:</label>
 				<form:input path="headWork.surname" type="text" class="form-control"
 					id="hw_surname" />
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-2 form-control-label" for="hw_patronymic">Отчество:</label>
-				<form:input path="headWork.patronymic" type="text"
-					class="form-control" id="hw_patronymic" />
+				<label class="col-sm-2 form-control-label" for="hw_name">Ім'я:</label>
+				<form:input path="headWork.firstName" type="text"
+					class="form-control" id="hw_name" />
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 form-control-label" for="hw_patronymic">По батькові:</label>
+				<form:input path="headWork.patronymic" type="text" class="form-control" id="hw_patronymic" />
 			</div>
 			<br />
 			<fieldset class="form-group">
@@ -124,10 +133,10 @@
 			<br />
 			<br />
 			<c:if test="${!empty graduateWork.uuid}">
-				<button type="submit" class="btn btn-success">Обновить</button>
+				<button type="submit" class="btn btn-success">Оновити</button>
 			</c:if>
 			<c:if test="${empty graduateWork.uuid}">
-				<button type="submit" class="btn btn-success">Сохранить</button>
+				<button type="submit" class="btn btn-success">Зберегти</button>
 			</c:if>
 			<button type="submit" class="btn btn-danger">Назад</button>
 		</form:form>

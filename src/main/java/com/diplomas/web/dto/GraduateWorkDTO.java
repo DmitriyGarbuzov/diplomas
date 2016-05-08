@@ -16,6 +16,10 @@ public class GraduateWorkDTO {
     
     private StudentDTO student;
     
+    private CathedraDTO cathedra;
+    
+    private StudentGroupDTO group;
+    
     private DegreeDTO degree;
     
     private HeadWorkDTO headWork;
@@ -68,7 +72,23 @@ public class GraduateWorkDTO {
         this.student = student;
     }
 
-    public DegreeDTO getDegree() {
+	public CathedraDTO getCathedra() {
+		return cathedra;
+	}
+
+	public void setCathedra(CathedraDTO cathedra) {
+		this.cathedra = cathedra;
+	}
+
+	public StudentGroupDTO getGroup() {
+		return group;
+	}
+
+	public void setGroup(StudentGroupDTO group) {
+		this.group = group;
+	}
+
+	public DegreeDTO getDegree() {
         return degree;
     }
 

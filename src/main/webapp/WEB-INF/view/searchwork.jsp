@@ -50,32 +50,35 @@
 	<div class="container">
 		<form role="form" action="<c:url value="/search" />" method="POST">
 			<div class="form-group row">
-				<label class="col-sm-2 form-control-label" for="subject">Текст для поиска:</label>
+				<label class="col-sm-2 form-control-label" for="subject">Текст для пошуку:</label>
 				<textarea class="form-control" id="textarea" rows="3"></textarea>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-2">Тип поиска</label>
+				<label class="col-sm-2">Тип пошуку</label>
 				<div class="col-sm-10">
 					<div class="radio">
 						<label> <input type="radio" name="gridRadios"
-							id="gridRadios1" value="1" checked>Поиск по Темам
+							id="gridRadios1" value="1" checked>Пошук за Темою
 						</label>
 					</div>
 					<div class="radio">
 						<label> <input type="radio" name="gridRadios"
-							id="gridRadios2" value="2" disabled> Поиск по ключевым словам
+							id="gridRadios2" value="2" disabled> Пошук за ключовимт словами
 						</label>
 					</div>
 					<div class="radio disabled">
 						<label> <input type="radio" name="gridRadios"
-							id="gridRadios3" value="3" disabled> Поиск по текстам робот
+							id="gridRadios3" value="3" disabled> Пошук за текстом робіт
 						</label>
 					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-success">Поиск</button>
+			<button type="submit" class="btn btn-success">Пошук</button>
 			<button type="submit" class="btn btn-danger">Назад</button>
 		</form>
+		<c:if test="${!empty graduateWorkList}">
+			
+		</c:if>
 	</div>
 	<!-- Footer -->
 	<div id="footer">

@@ -18,22 +18,20 @@
 			create table cathedra (id int8 not null, cathedra_name varchar(255) not null, faculty_id int8 not null, primary key (id));
 			create table degree (id int8 not null, degree_key varchar(255) not null, primary key (id));
 			create table faculty (id int8 not null, faculty_name varchar(255) not null, primary key (id));
-			create table graduate_work (id int8 not null, file_name varchar(255) not null, self_href varchar(255) not null, subject varchar(255) not null, uuid uuid not null, year varchar(255) not null, degree_id int8 not null, head_work_id int8 not null, student_id int8 not null, primary key (id));
+			create table graduate_work (id int8 not null, file_name varchar(255) not null, self_href varchar(255) not null, subject varchar(255) not null, uuid uuid not null, year varchar(255) not null, cathedra_id int8 not null, degree_id int8 not null, student_group_id int8 not null, head_work_id int8 not null, student_id int8 not null, primary key (id));
 			create table head_work (id int8 not null, first_name varchar(255) not null, patronymic varchar(255) not null, surname varchar(255) not null, uuid uuid not null, primary key (id));
-			create table student (id int8 not null, first_name varchar(255) not null, patronymic varchar(255) not null, surname varchar(255) not null, uuid uuid not null, student_group_id int8 not null, head_work_id int8 not null, primary key (id));
-			create table student_group (id int8 not null, group_name varchar(255) not null, cathedra_id int8 not null, primary key (id));
+			create table student (id int8 not null, first_name varchar(255) not null, patronymic varchar(255) not null, surname varchar(255) not null, uuid uuid not null, primary key (id));
+			create table student_group (id int8 not null, group_name varchar(255) not null, primary key (id));
 			create table users (id int8 not null, enabled boolean, password varchar(255), username varchar(255), primary key (id));
-			
 			alter table graduate_work add constraint UK_n96vrirfkojw1h6gtln4w2m5l  unique (uuid);
 			alter table head_work add constraint UK_lsxm9gemqeaqj8nubs8qmahvp  unique (uuid);
 			alter table student add constraint UK_n09wn3oi04obkqmyhv8e3cqm2  unique (uuid);
 			alter table cathedra add constraint FK_fft11l0yd0u523qqqiu31pk0j foreign key (faculty_id) references faculty;
+			alter table graduate_work add constraint FK_gxj4m56m6e24soj9h38ra91gd foreign key (cathedra_id) references cathedra;
 			alter table graduate_work add constraint FK_pqogxhmwj0lvi7uy8paro7kdu foreign key (degree_id) references degree;
+			alter table graduate_work add constraint FK_tls8mx2fg9qi63w5wryim3rlj foreign key (student_group_id) references student_group;
 			alter table graduate_work add constraint FK_gsndf7j2wx2wr23a1f0oqw3og foreign key (head_work_id) references head_work;
 			alter table graduate_work add constraint FK_9cdx7k3prkwvc3eyh8gdl8v4s foreign key (student_id) references student;
-			alter table student add constraint FK_bn14e1x4qf4y7uc7e72iiffme foreign key (student_group_id) references student_group;
-			alter table student add constraint FK_tienwkpk4tbwfi1ceqhd1nx3h foreign key (head_work_id) references head_work;
-			alter table student_group add constraint FK_bqopjhs1n5bhijuse6m23ai6m foreign key (cathedra_id) references cathedra;
 			
 			INSERT into degree (id, degree_key) values (1, 'Бакалавр');
 			INSERT into degree (id, degree_key) values (2, 'Специалист');

@@ -66,35 +66,39 @@
 							<thead>
 								<tr>
 									<th><em class="fa fa-cog"></em></th>
-									<th class="hidden-xs">#</th>
 									<th>Тема</th>
 									<th>Студент</th>
 									<th>Факультет</th>
 									<th>Кафедра</th>
-									<th>Группа</th>
-									<th>Руководитель</th>
-									<th>Год</th>
-									<th>Текст работы</th>
+									<th>Група</th>
+									<th>Керівник</th>
+									<th>Рік</th>
+									<th>Текст роботи</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td align="center"><a class="btn btn-default"><em
-											class="fa fa-pencil"></em></a> <a class="btn btn-danger"><em
-											class="fa fa-trash"></em></a></td>
-									<td class="hidden-xs">1</td>
-									<td>КСЗИ виды и их предназначения</td>
-									<td>Гарбузов Д.С.</td>
-									<td>Компьютерной Инженерии и Управления</td>
-									<td>Безопасность информационных технологий</td>
-									<td>Бикс 11-5</td>
-									<td>Халімов Г.З.</td>
-									<td>2016</td>
-									<td><a href="#">просмотр</a></td>
-								</tr>
+								<c:forEach items="${graduateWorkList}" var="graduateWork">
+									<tr>
+										<td align="center">
+										<a href="<c:url value='/edit/${graduateWork.uuid}' />" class="btn btn-default"><em class="fa fa-pencil"></em></a> 
+										<a href="<c:url value='/remove/${graduateWork.uuid}' />" class="btn btn-danger"><em class="fa fa-trash"></em></a></td>
+										<td>${graduateWork.subject}</td>
+										<td>${graduateWork.student.surname}
+											${graduateWork.student.firstName}
+											${graduateWork.student.patronymic}</td>
+
+										<td>${graduateWork.cathedra.cathedraName}</td>
+										<td>${graduateWork.cathedra.faculty.facultyName}</td>
+										<td>${graduateWork.group.groupName}</td>
+										<td>${graduateWork.headWork.surname}
+											${graduateWork.headWork.firstName}
+											${graduateWork.headWork.patronymic}</td>
+										<td>${graduateWork.year}</td>
+										<td><a href="${graduateWork.selfHref}" >${graduateWork.fileName}</a></td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
-
 					</div>
 					<!-- <div class="panel-footer">
 						<div class="row">
@@ -115,7 +119,6 @@
 						</div>
 					</div> -->
 				</div>
-
 			</div>
 		</div>
 	</div>

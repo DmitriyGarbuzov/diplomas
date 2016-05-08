@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.diplomas.Application;
 import com.diplomas.entity.Degree;
 import com.diplomas.service.CathedraService;
 import com.diplomas.service.DegreeService;
@@ -23,7 +22,7 @@ import com.diplomas.web.dto.GraduateWorkDTO;
 public class MainController {
 	
 	private static final Logger logger = LoggerFactory
-			.getLogger(Application.class);
+			.getLogger(MainController.class);
 	
 	@Autowired
 	private GraduateWorkService graduateWorkService;

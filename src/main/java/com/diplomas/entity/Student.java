@@ -4,8 +4,6 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -26,14 +24,6 @@ public class Student extends BaseEntity {
 
     @Column(name = "surname", nullable = false)
     private String surname;
-    
-    @ManyToOne
-    @JoinColumn(name = "student_group_id", nullable = false)
-    private StudentGroup group;
-    
-    @ManyToOne
-    @JoinColumn(name = "head_work_id", nullable = false)
-    private HeadWork headWork;
     
     public UUID getUuid() {
         return uuid;
@@ -65,21 +55,5 @@ public class Student extends BaseEntity {
 
     public void setSurname(String surname) {
 	this.surname = surname;
-    }
-
-    public StudentGroup getGroup() {
-        return group;
-    }
-
-    public void setGroup(StudentGroup group) {
-        this.group = group;
-    }
-
-    public HeadWork getHeadWork() {
-        return headWork;
-    }
-
-    public void setHeadWork(HeadWork headWork) {
-        this.headWork = headWork;
     }
 }
