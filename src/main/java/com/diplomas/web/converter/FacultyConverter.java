@@ -9,23 +9,22 @@ import com.diplomas.web.dto.FacultyDTO;
 import com.google.common.base.Converter;
 
 @Component
-public class FacultyConverter extends Converter<Faculty,FacultyDTO>{
-    
-    @Autowired
-    private FacultyRepository facultyRepository; 
-    
-    @Override
-    protected Faculty doBackward(FacultyDTO dto) {
-	return facultyRepository
-		.findOneByFacultyName(dto.getFacultyName())
-		.orElse(null);
-    }
+public class FacultyConverter extends Converter<Faculty, FacultyDTO> {
 
-    @Override
-    protected FacultyDTO doForward(Faculty entity) {
-	FacultyDTO dto = new FacultyDTO();
-	dto.setFacultyName(entity.getFacultyName());
-	return dto;
-    }
+	@Autowired
+	private FacultyRepository facultyRepository;
+
+	@Override
+	protected Faculty doBackward(FacultyDTO dto) {
+		return facultyRepository.findOneByFacultyName(dto.getFacultyName()).orElse(null);
+	}
+
+	@Override
+	protected FacultyDTO doForward(Faculty entity) {
+		FacultyDTO dto = new FacultyDTO();
+		dto.setId(entity.getId());
+		dto.setFacultyName(entity.getFacultyName());
+		return dto;
+	}
 
 }

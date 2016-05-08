@@ -22,6 +22,9 @@ public class GraduateWork extends BaseEntity{
     @Column(name = "subject", nullable = false)
     private String subject;
     
+    @Column(name = "file_name", nullable = false)
+    private String fileName;
+    
     @Column(name = "self_href", nullable = false)
     private String selfHref;
     
@@ -56,7 +59,15 @@ public class GraduateWork extends BaseEntity{
         this.subject = subject;
     }
 
-    public String getSelfHref() {
+    public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getSelfHref() {
         return selfHref;
     }
 

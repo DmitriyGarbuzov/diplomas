@@ -8,6 +8,8 @@ public class GraduateWorkDTO {
     
     private String subject;
     
+    private String fileName;
+    
     private String selfHref;
     
     private String year;
@@ -33,8 +35,16 @@ public class GraduateWorkDTO {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+    
+    public String getFileName() {
+		return fileName;
+	}
 
-    public String getSelfHref() {
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getSelfHref() {
         return selfHref;
     }
 

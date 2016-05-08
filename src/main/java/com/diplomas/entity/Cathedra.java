@@ -33,8 +33,9 @@ public class Cathedra extends BaseEntity {
         this.faculty = faculty;
     }
 
-    @Override
-    public String toString() {
-	return "Cathedra [cathedra_name=" + cathedraName + "]";
-    }
+	@Override
+	public String toString() {
+		return "Cathedra [cathedraName=" + cathedraName + ", faculty=" + faculty + "]";
+	}
+
 }

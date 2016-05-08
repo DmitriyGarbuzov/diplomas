@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.diplomas.Application;
 import com.diplomas.entity.Degree;
+import com.diplomas.service.CathedraService;
+import com.diplomas.service.DegreeService;
+import com.diplomas.service.FacultyService;
 import com.diplomas.service.GraduateWorkService;
+import com.diplomas.web.dto.GraduateWorkDTO;
 
 @Controller
 public class MainController {
@@ -23,6 +27,15 @@ public class MainController {
 	
 	@Autowired
 	private GraduateWorkService graduateWorkService;
+	
+	@Autowired
+	private FacultyService facultyService;
+	
+	@Autowired
+	private CathedraService cathedraService;
+	
+	@Autowired
+	private DegreeService degreeService;
 	
 	@RequestMapping(value = "/bachelors", method = RequestMethod.GET)
 	public String bachelorsGraduateWorkList(Model model) {
@@ -41,6 +54,10 @@ public class MainController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String addGraduateWork(Model model) {
+		model.addAttribute("graduateWork",new GraduateWorkDTO());
+		model.addAttribute("faculties", facultyService.getAllFaculties());
+		model.addAttribute("cathedras", cathedraService.getAllCathedras());
+		model.addAttribute("degress", degreeService.getAllDegrees());
 		return "graduatework";
 	}
 	

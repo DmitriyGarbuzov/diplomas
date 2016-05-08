@@ -25,11 +25,33 @@ public class GraduateWorkConverter extends Converter<GraduateWork,GraduateWorkDT
     @Autowired
     private GraduateWorkRepository graduateWorkRepository;
     
-    @Override
-    protected GraduateWork doBackward(GraduateWorkDTO dto) {
-	// TODO Auto-generated method stub
-	return null;
-    }
+	@Override
+	protected GraduateWork doBackward(GraduateWorkDTO dto) {
+		GraduateWork entity = null;
+		if (dto.getUuid() != null 
+				&& graduateWorkRepository.findOneByUuid(dto.getUuid()) != null) {
+			//TODO : implement update
+		} else {
+			entity = new GraduateWork();
+			entity.setSubject(dto.getSubject());
+			entity.setYear(dto.getYear());
+			entity.setDegree(Optional.ofNullable(dto.getDegree())
+					.map(degreeConverter.reverse()::convert)
+					.orElse(null));
+			entity.setStudent(Optional.ofNullable(dto.getStudent())
+					.map(studentConverter.reverse()::convert)
+					.orElse(null));
+			
+			entity.setHeadWork(Optional.ofNullable(dto.getHeadWork())
+					.map(headWorkConverter.reverse()::convert)
+					.orElse(null));
+			
+			//TODO : implement with GoogleDrive
+			entity.setFileName("fileName.doc");
+			entity.setSelfHref("http://vk.com");
+		}
+		return entity;
+	}
 
     @Override
     protected GraduateWorkDTO doForward(GraduateWork entity) {
@@ -37,6 +59,7 @@ public class GraduateWorkConverter extends Converter<GraduateWork,GraduateWorkDT
 	dto.setUuid(entity.getUuid());
 	dto.setSubject(entity.getSubject());
 	dto.setSelfHref(entity.getSelfHref());
+	dto.setFileName(entity.getFileName());
 	dto.setYear(entity.getYear());
 	dto.setHeadWork(Optional.ofNullable(entity.getHeadWork())
 		.map(headWorkConverter::convert)

@@ -2,11 +2,100 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-	<changeSet author="garbuzov.dmitriy@bk.ru" id="1">
+	<changeSet author="grinyk.nikolay" id="1">
 		<sql>
-			INSERT into degree (id, degree_key) values (1, 'BACHELOR_DEGREE');
-			INSERT into degree (id, degree_key) values (2, 'SPECIALIST_DEGREE');
-			INSERT into degree (id, degree_key) values (3, 'MASTER_DEGREE');
+			drop table if exists authorities cascade;
+			drop table if exists cathedra cascade;
+			drop table if exists degree cascade;
+			drop table if exists faculty cascade;
+			drop table if exists graduate_work cascade;
+			drop table if exists head_work cascade;
+			drop table if exists student cascade;
+			drop table if exists student_group cascade;
+			drop table if exists users cascade;
+			
+			create table authorities (id int8 not null, authority varchar(255), username varchar(255), primary key (id));
+			create table cathedra (id int8 not null, cathedra_name varchar(255) not null, faculty_id int8 not null, primary key (id));
+			create table degree (id int8 not null, degree_key varchar(255) not null, primary key (id));
+			create table faculty (id int8 not null, faculty_name varchar(255) not null, primary key (id));
+			create table graduate_work (id int8 not null, file_name varchar(255) not null, self_href varchar(255) not null, subject varchar(255) not null, uuid uuid not null, year varchar(255) not null, degree_id int8 not null, head_work_id int8 not null, student_id int8 not null, primary key (id));
+			create table head_work (id int8 not null, first_name varchar(255) not null, patronymic varchar(255) not null, surname varchar(255) not null, uuid uuid not null, primary key (id));
+			create table student (id int8 not null, first_name varchar(255) not null, patronymic varchar(255) not null, surname varchar(255) not null, uuid uuid not null, student_group_id int8 not null, head_work_id int8 not null, primary key (id));
+			create table student_group (id int8 not null, group_name varchar(255) not null, cathedra_id int8 not null, primary key (id));
+			create table users (id int8 not null, enabled boolean, password varchar(255), username varchar(255), primary key (id));
+			
+			alter table graduate_work add constraint UK_n96vrirfkojw1h6gtln4w2m5l  unique (uuid);
+			alter table head_work add constraint UK_lsxm9gemqeaqj8nubs8qmahvp  unique (uuid);
+			alter table student add constraint UK_n09wn3oi04obkqmyhv8e3cqm2  unique (uuid);
+			alter table cathedra add constraint FK_fft11l0yd0u523qqqiu31pk0j foreign key (faculty_id) references faculty;
+			alter table graduate_work add constraint FK_pqogxhmwj0lvi7uy8paro7kdu foreign key (degree_id) references degree;
+			alter table graduate_work add constraint FK_gsndf7j2wx2wr23a1f0oqw3og foreign key (head_work_id) references head_work;
+			alter table graduate_work add constraint FK_9cdx7k3prkwvc3eyh8gdl8v4s foreign key (student_id) references student;
+			alter table student add constraint FK_bn14e1x4qf4y7uc7e72iiffme foreign key (student_group_id) references student_group;
+			alter table student add constraint FK_tienwkpk4tbwfi1ceqhd1nx3h foreign key (head_work_id) references head_work;
+			alter table student_group add constraint FK_bqopjhs1n5bhijuse6m23ai6m foreign key (cathedra_id) references cathedra;
+			
+			INSERT into degree (id, degree_key) values (1, 'Бакалавр');
+			INSERT into degree (id, degree_key) values (2, 'Специалист');
+			INSERT into degree (id, degree_key) values (3, 'Магистр');
+			
+			INSERT into faculty (id, faculty_name) values (1, 'Будівельний факультет');
+			INSERT into faculty (id, faculty_name) values (2, 'Факультет компютеризованих технологій машинобудування і дизайну');
+			INSERT into faculty (id, faculty_name) values (3, 'Факультет електронних технологій');
+			INSERT into faculty (id, faculty_name) values (4, 'Факультет харчових технологій та сфери обслуговування ');
+			INSERT into faculty (id, faculty_name) values (5, 'Факультет економіки та управління');
+			INSERT into faculty (id, faculty_name) values (6, 'Факультет інформаційних технологій та систем');
+			INSERT into faculty (id, faculty_name) values (7, 'Лінгвістичний факультет');
+			
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (1, 'Кафедра промислового і цивільного будівництва',1);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (2, 'Кафедра хімії та хімічної технології неорганічних речовин',1);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (3, 'Кафедра екології',1);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (4, 'Кафедра будівельних конструкцій',1);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (5, 'Кафедра безпеки життєдіяльності',1);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (6, 'Кафедра загальної екології, педагогіки та психології',1);
+			
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (7, 'Кафедра технології та обладнання машинобудівних виробництв',2);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (8, 'Кафедра проектування харчових виробництв та верстатів нового покоління',2);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (9, 'Кафедра механіки, поліграфічних машин і технологій',2);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (10, 'Кафедра енерготехнологій',2);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (11, 'Кафедра автомобілів та технології їх експлуатації',2);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (12, 'Кафедра дизайну',2);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (13, 'Кафедра фізики',2);
+			
+						
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (14, 'Кафедра радіотехніки та інформаційно-телекомунікаційних систем',3);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (15, 'Кафедра комп’ютеризованих та інформаційних технологій у приладобудуванні',3);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (16, 'Кафедра кафедра електротехнічних систем',3);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (17, 'Кафедра інформатики та інформаційної безпеки',3);
+			
+			
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (18, 'Кафедра туризму та готельно-ресторанної справи',4);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (19, 'Кафедра технології бродильних виробництв',4);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (20, 'Кафедра історії України та суспільних дисциплін',4);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (21, 'Кафедра фізичного виховання та здоровя людини',4);
+			
+			
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (22, 'Кафедра економіки та підприємництва',5);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (23, 'Кафедра менеджменту ',5);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (24, 'Кафедра фінансів',5);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (25, 'Кафедра економічної кібернетики та маркетингу',5);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (26, 'Кафедра міжнародної економіки',5);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (27, 'Кафедра бухгалтерського обліку, аналізу і аудиту',5);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (28, 'Кафедра філософії',5);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (29, 'Кафедра економічної теорії та банківської справи',5);
+			
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (30, 'Кафедра компютерних наук та інформаційних технологій управління',6);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (31, 'Кафедра інформаційних технологій проектування',6);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (32, 'Кафедра програмного забезпечення автоматизованих систем',6);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (33, 'Кафедра інформаційної безпеки та комп’ютерної інженерії',6);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (34, 'Кафедра спеціалізованих комп’ютерних систем',6);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (35, 'Кафедра вищої та прикладної математики',6);
+			
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (36, 'Кафедра прикладної лінгвістики',7);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (37, 'Кафедра романо-германської філології та перекладу',7);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (38, 'Кафедра іноземних мов',7);
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (39, 'Кафедра української мови та загального мовознавства',7);
+
 		</sql>
 	</changeSet>
 </databaseChangeLog>

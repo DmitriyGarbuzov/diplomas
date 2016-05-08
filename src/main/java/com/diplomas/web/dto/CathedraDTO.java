@@ -6,6 +6,8 @@ public class CathedraDTO {
     
     private String cathedraName;
     
+    private FacultyDTO faculty;
+    
     public Long getId() {
         return id;
     }
@@ -21,9 +23,17 @@ public class CathedraDTO {
     public void setCathedraName(String cathedraName) {
         this.cathedraName = cathedraName;
     }
+    
+    public FacultyDTO getFaculty() {
+		return faculty;
+	}
 
-    @Override
-    public String toString() {
-	return "CathedraDTO [cathedraName=" + cathedraName + "]";
-    }
+	public void setFaculty(FacultyDTO faculty) {
+		this.faculty = faculty;
+	}
+
+	@Override
+	public String toString() {
+		return "CathedraDTO [id=" + id + ", cathedraName=" + cathedraName + ", faculty=" + faculty + "]";
+	}
 }

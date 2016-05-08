@@ -28,9 +28,10 @@ public class RestController {
 		return "redirect:/bachelors";
 	}
 
-	@RequestMapping("/remove/{uuid}")
+	@RequestMapping(value = "/remove/{uuid}", method = RequestMethod.DELETE)
 	public String deleteGraduateWork(@PathVariable("uuid") UUID uuid) {
 		graduateWorkService.deleteGraduateWork(uuid);
 		return "redirect:/bachelors";
 	}
+	
 }

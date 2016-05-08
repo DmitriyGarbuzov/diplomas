@@ -23,7 +23,7 @@ public class GraduateWorkService {
     
     @Autowired
     private GoogleDriveService googleDriveService;
-
+    
     public List<GraduateWorkDTO> getGraduateWorksByDegreePK(Long degreePk) {
 	return graduateWorkRepository
 		.findAllByDegreeId(degreePk)
