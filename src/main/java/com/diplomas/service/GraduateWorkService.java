@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.diplomas.controller.MainController;
 import com.diplomas.entity.GraduateWork;
 import com.diplomas.entity.Student;
 import com.diplomas.entity.StudentGroup;
@@ -12,6 +13,8 @@ import com.diplomas.repository.HeadWorkRepository;
 import com.diplomas.repository.StudentGroupRepository;
 import com.diplomas.repository.StudentRepository;
 import com.diplomas.web.dto.SearchDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +24,10 @@ import com.diplomas.web.dto.GraduateWorkDTO;
 
 @Service
 public class GraduateWorkService {
-    
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(GraduateWorkService.class);
+
     @Autowired
     private GraduateWorkConverter graduateWorkConverter; 
     
@@ -71,9 +77,13 @@ public class GraduateWorkService {
 				.orElse(null);
 		googleDriveService.removeFile(entity.getSelfHref());
 		if(entity != null) {
-			studentRepository.delete(entity.getStudent());
-			studentGroupRepository.delete(entity.getGroup());
-			headWorkRepository.delete(entity.getHeadWork());
+			try {
+				studentRepository.delete(entity.getStudent());
+				studentGroupRepository.delete(entity.getGroup());
+				headWorkRepository.delete(entity.getHeadWork());
+			} catch (Exception e) {
+				logger.error("An error has been occured ",e);
+			}
 		}
 		graduateWorkRepository.deleteByUuid(uuid);
 		return dto;

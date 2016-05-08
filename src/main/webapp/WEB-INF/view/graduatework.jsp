@@ -128,6 +128,7 @@
         <br/>
         <br/>
         <c:if test="${!empty graduateWork.uuid}">
+            <form:hidden path="uuid" />
             <button type="submit" class="btn btn-success">Оновити</button>
         </c:if>
         <c:if test="${empty graduateWork.uuid}">
