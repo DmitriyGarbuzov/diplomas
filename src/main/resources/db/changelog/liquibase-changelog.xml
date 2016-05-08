@@ -13,6 +13,7 @@
 			drop table if exists student cascade;
 			drop table if exists student_group cascade;
 			drop table if exists users cascade;
+			drop sequence if exists hibernate_sequence;
 			
 			create table authorities (id int8 not null, authority varchar(255), username varchar(255), primary key (id));
 			create table cathedra (id int8 not null, cathedra_name varchar(255) not null, faculty_id int8 not null, primary key (id));
@@ -23,6 +24,7 @@
 			create table student (id int8 not null, first_name varchar(255) not null, patronymic varchar(255) not null, surname varchar(255) not null, uuid uuid not null, primary key (id));
 			create table student_group (id int8 not null, group_name varchar(255) not null, primary key (id));
 			create table users (id int8 not null, enabled boolean, password varchar(255), username varchar(255), primary key (id));
+
 			alter table graduate_work add constraint UK_n96vrirfkojw1h6gtln4w2m5l  unique (uuid);
 			alter table head_work add constraint UK_lsxm9gemqeaqj8nubs8qmahvp  unique (uuid);
 			alter table student add constraint UK_n09wn3oi04obkqmyhv8e3cqm2  unique (uuid);
@@ -32,7 +34,9 @@
 			alter table graduate_work add constraint FK_tls8mx2fg9qi63w5wryim3rlj foreign key (student_group_id) references student_group;
 			alter table graduate_work add constraint FK_gsndf7j2wx2wr23a1f0oqw3og foreign key (head_work_id) references head_work;
 			alter table graduate_work add constraint FK_9cdx7k3prkwvc3eyh8gdl8v4s foreign key (student_id) references student;
-			
+
+			create sequence hibernate_sequence;
+
 			INSERT into degree (id, degree_key) values (1, 'Бакалавр');
 			INSERT into degree (id, degree_key) values (2, 'Специалист');
 			INSERT into degree (id, degree_key) values (3, 'Магистр');

@@ -68,6 +68,9 @@ public class MainController {
 	@RequestMapping(value = "/edit/{uuid}", method = RequestMethod.GET)
 	public String editGraduateWork(@PathVariable("uuid") UUID uuid, Model model) {
 		model.addAttribute("graduateWork", graduateWorkService.getGraduateWork(uuid));
+		model.addAttribute("faculties", facultyService.getAllFaculties());
+		model.addAttribute("cathedras", cathedraService.getAllCathedras());
+		model.addAttribute("degress", degreeService.getAllDegrees());
 		return "graduatework";
 	}
 

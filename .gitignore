@@ -13,3 +13,5 @@ target/
 .project
 README.md
 .classpath
+.idea/
+diplomas.iml

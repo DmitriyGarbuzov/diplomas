@@ -5,6 +5,13 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.diplomas.entity.GraduateWork;
+import com.diplomas.entity.Student;
+import com.diplomas.entity.StudentGroup;
+import com.diplomas.repository.HeadWorkRepository;
+import com.diplomas.repository.StudentGroupRepository;
+import com.diplomas.repository.StudentRepository;
+import com.diplomas.web.dto.SearchDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +30,15 @@ public class GraduateWorkService {
     
     @Autowired
     private GoogleDriveService googleDriveService;
+
+	@Autowired
+	private HeadWorkRepository headWorkRepository;
+
+	@Autowired
+	private StudentGroupRepository studentGroupRepository;
+
+	@Autowired
+	private StudentRepository studentRepository;
     
     public List<GraduateWorkDTO> getGraduateWorksByDegreePK(Long degreePk) {
 	return graduateWorkRepository
@@ -39,12 +55,7 @@ public class GraduateWorkService {
 				.map(graduateWorkConverter::convert)
 				.orElse(null);
 	}
-    
-    public GraduateWorkDTO updateGraduateWork(GraduateWorkDTO dto) {
-    	//TODO: implement update in Google Drive
-    	return null;
-    }
-    
+
     public GraduateWorkDTO getGraduateWork(UUID uuid) {
     	return Optional.ofNullable(
     			graduateWorkRepository.findOneByUuid(uuid)
@@ -53,13 +64,23 @@ public class GraduateWorkService {
     			.orElse(null);
     }
     
-	public void deleteGraduateWork(UUID uuid) {
-		//TODO: implement remove from Google Drive
+	public GraduateWorkDTO deleteGraduateWork(UUID uuid) {
+		GraduateWork entity = graduateWorkRepository.findOneByUuid(uuid);
+		GraduateWorkDTO dto = Optional.ofNullable(entity)
+				.map(graduateWorkConverter::convert)
+				.orElse(null);
+		googleDriveService.removeFile(entity.getSelfHref());
+		if(entity != null) {
+			studentRepository.delete(entity.getStudent());
+			studentGroupRepository.delete(entity.getGroup());
+			headWorkRepository.delete(entity.getHeadWork());
+		}
 		graduateWorkRepository.deleteByUuid(uuid);
+		return dto;
 	}
     
-    public List<GraduateWorkDTO> searchGraduateWorks(String text) {
-    	return googleDriveService.searchGraduateWorks(text)
+    public List<GraduateWorkDTO> searchGraduateWorks(SearchDTO dto) {
+    	return googleDriveService.searchGraduateWorks(dto.getSearchText())
     			.stream()
     			.map(graduateWorkConverter::convert)
     			.collect(Collectors.toList());

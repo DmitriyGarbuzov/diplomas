@@ -25,6 +25,7 @@ public class StudentConverter extends Converter<Student, StudentDTO> {
 			entity.setFirstName(dto.getFirstName());
 			entity.setSurname(dto.getSurname());
 			entity.setPatronymic(dto.getPatronymic());
+			studentRepository.save(entity);
 		}
 		return entity;
 	}

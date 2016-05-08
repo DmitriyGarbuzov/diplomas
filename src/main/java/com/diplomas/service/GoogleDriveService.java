@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.diplomas.web.dto.SearchDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,15 @@ public class GoogleDriveService {
     	return "";
     }
     
-    public List<GraduateWork> searchGraduateWorks(String searchText){
+    public List<GraduateWork> searchGraduateWorks(String text){
 	//TODO : implement with searching via google drive
 	return null;
     }
     
-//    private List<Immutable<String,String> getAlld(){
-//    	return null;
-//    }
-    
+    public void removeFile(String selfHref) {
+
+    }
+
     private List<String> getAllGraduateWorksHrefs() {
     	return graduateWorkRepository
     	.findAll()

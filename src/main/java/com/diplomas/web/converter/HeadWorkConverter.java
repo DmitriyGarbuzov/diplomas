@@ -24,6 +24,7 @@ public class HeadWorkConverter extends Converter<HeadWork, HeadWorkDTO> {
 			entity.setFirstName(dto.getFirstName());
 			entity.setSurname(dto.getSurname());
 			entity.setPatronymic(dto.getPatronymic());
+			headWorkRepository.save(entity);
 		}
 		return entity;
 	}

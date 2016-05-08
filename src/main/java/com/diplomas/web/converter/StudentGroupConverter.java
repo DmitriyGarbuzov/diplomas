@@ -22,6 +22,7 @@ public class StudentGroupConverter extends Converter<StudentGroup, StudentGroupD
 		} else {
 			entity = new StudentGroup();
 			entity.setGroupName(dto.getGroupName());
+			studentGroupRepository.save(entity);
 		}
 		return entity;
 	}
