@@ -87,15 +87,15 @@
             <label lass="col-sm-2 form-control-label" for="degree_s">Ступінь</label>
             <form:select path="degree.id" id="degree_s" class="form-control">
                 <c:forEach var="degr" items="${degress}">
-                    <option value="${degr.id}">${degr.degreeName}</option>
+                    <option value="${degr.id}" ${selectedDegree.id == degr.id ? 'selected="selected"' : ''} >${degr.degreeName}</option>
                 </c:forEach>
             </form:select>
         </fieldset>
         <fieldset class="form-group">
             <label lass="col-sm-2 form-control-label" for="cathedra_s">Кафедра</label>
             <form:select path="cathedra.id" id="cathedra_s" class="form-control">
-                <c:forEach var="cathedra" items="${cathedras}">
-                    <option value="${cathedra.id}">${cathedra.cathedraName}</option>
+                <c:forEach var="cath" items="${cathedras}">
+                    <option value="${cath.id}" ${selectedCathedra.id == cath.id ? 'selected="selected"' : ''} >${cath.cathedraName}</option>
                 </c:forEach>
             </form:select>
         </fieldset>
