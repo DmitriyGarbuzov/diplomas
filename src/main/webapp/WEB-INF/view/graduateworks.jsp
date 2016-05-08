@@ -89,9 +89,8 @@
                                 <td>${graduateWork.student.surname}
                                         ${graduateWork.student.firstName}
                                         ${graduateWork.student.patronymic}</td>
-
-                                <td>${graduateWork.cathedra.cathedraName}</td>
                                 <td>${graduateWork.cathedra.faculty.facultyName}</td>
+                                <td>${graduateWork.cathedra.cathedraName}</td>
                                 <td>${graduateWork.group.groupName}</td>
                                 <td>${graduateWork.headWork.surname}
                                         ${graduateWork.headWork.firstName}

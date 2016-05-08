@@ -2,7 +2,13 @@ package com.diplomas.web.converter;
 
 import java.util.Optional;
 
+import com.diplomas.controller.MainController;
+import com.diplomas.repository.HeadWorkRepository;
+import com.diplomas.repository.StudentGroupRepository;
+import com.diplomas.repository.StudentRepository;
 import com.diplomas.service.CheckService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,20 +20,32 @@ import com.google.common.base.Converter;
 @Component
 public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkDTO> {
 
-    @Autowired
-    private HeadWorkConverter headWorkConverter;
+    private static final Logger logger = LoggerFactory
+            .getLogger(GraduateWorkConverter.class);
 
     @Autowired
     private CathedraConverter cathedraConverter;
-
-    @Autowired
-    private StudentGroupConverter studentGroupConverter;
 
     @Autowired
     private DegreeConverter degreeConverter;
 
     @Autowired
     private StudentConverter studentConverter;
+
+    @Autowired
+    private HeadWorkConverter headWorkConverter;
+
+    @Autowired
+    private StudentGroupConverter studentGroupConverter;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private StudentGroupRepository studentGroupRepository;
+
+    @Autowired
+    private HeadWorkRepository headWorkRepository;
 
     @Autowired
     private GraduateWorkRepository graduateWorkRepository;
@@ -58,9 +76,7 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
         dto.setHeadWork(Optional.ofNullable(entity.getHeadWork()).map(headWorkConverter::convert).orElse(null));
         dto.setDegree(Optional.ofNullable(entity.getDegree()).map(degreeConverter::convert).orElse(null));
         dto.setCathedra(Optional.ofNullable(entity.getCathedra()).map(cathedraConverter::convert).orElse(null));
-
         dto.setGroup(Optional.ofNullable(entity.getGroup()).map(studentGroupConverter::convert).orElse(null));
-
         dto.setStudent(Optional.ofNullable(entity.getStudent()).map(studentConverter::convert).orElse(null));
         return dto;
     }
@@ -75,16 +91,31 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
         if (!checkService.equals(dto.getDegree(), oldEntity.getDegree())) {
             oldEntity.setDegree(Optional.ofNullable(dto.getDegree()).map(degreeConverter.reverse()::convert).orElse(null));
         }
-        if (!checkService.equals(dto.getStudent(), oldEntity.getStudent())) {
-            oldEntity.setStudent(Optional.ofNullable(dto.getStudent()).map(studentConverter.reverse()::convert).orElse(null));
-        }
         if (!checkService.equals(dto.getCathedra(), oldEntity.getCathedra())) {
             oldEntity.setCathedra(Optional.ofNullable(dto.getCathedra()).map(cathedraConverter.reverse()::convert).orElse(null));
         }
+        if (!checkService.equals(dto.getStudent(), oldEntity.getStudent())) {
+            try {
+                studentRepository.delete(oldEntity.getStudent());
+            } catch (Exception e) {
+                logger.error("An error has been occured!", e);
+            }
+            oldEntity.setStudent(Optional.ofNullable(dto.getStudent()).map(studentConverter.reverse()::convert).orElse(null));
+        }
         if (!checkService.equals(dto.getGroup(), oldEntity.getGroup())) {
+            try {
+                studentGroupRepository.delete(oldEntity.getGroup());
+            } catch (Exception e) {
+                logger.error("An error has been occured!", e);
+            }
             oldEntity.setGroup(Optional.ofNullable(dto.getGroup()).map(studentGroupConverter.reverse()::convert).orElse(null));
         }
         if (!checkService.equals(dto.getHeadWork(), oldEntity.getHeadWork())) {
+            try {
+                headWorkRepository.delete(oldEntity.getHeadWork());
+            } catch (Exception e) {
+                logger.error("An error has been occured!", e);
+            }
             oldEntity.setHeadWork(Optional.ofNullable(dto.getHeadWork()).map(headWorkConverter.reverse()::convert).orElse(null));
         }
         return oldEntity;
