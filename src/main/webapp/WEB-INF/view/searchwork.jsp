@@ -33,7 +33,7 @@
     <!-- Collection of nav links and other content for toggling -->
     <div id="navbarCollapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="/bachelors">Бакалаври</a></li>
+            <li><a href="/bachelors">Бакалаври</a></li>
             <li><a href="/specialists">Спеціалісти</a></li>
             <li><a href="/masters">Магістри</a></li>
             <li><a href="/search">Пошук</a></li>

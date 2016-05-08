@@ -5,13 +5,11 @@ import java.util.UUID;
 import com.diplomas.entity.Degree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.diplomas.service.GraduateWorkService;
 import com.diplomas.web.dto.GraduateWorkDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class RestController {
@@ -20,7 +18,9 @@ public class RestController {
     private GraduateWorkService graduateWorkService;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String addGraduateWork(@ModelAttribute("graduateWork") GraduateWorkDTO dto) {
+    public String addGraduateWork(@ModelAttribute("graduateWork") GraduateWorkDTO dto,
+                                  @RequestParam(value = "file", required = true) MultipartFile file) {
+        dto.setFileName(file.getName());
         graduateWorkService.saveGraduateWork(dto);
         return redirect(dto);
     }

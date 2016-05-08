@@ -35,7 +35,7 @@
     <!-- Collection of nav links and other content for toggling -->
     <div id="navbarCollapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="/bachelors">Бакалаври</a></li>
+            <li><a href="/bachelors">Бакалаври</a></li>
             <li><a href="/specialists">Спеціалісти</a></li>
             <li><a href="/masters">Магістри</a></li>
             <li><a href="/search">Пошук</a></li>
@@ -55,7 +55,7 @@
         <h2>Створення</h2>
     </c:if>
     <form:form role="form" action="${saveUpdateAction}" method="POST"
-               commandName="graduateWork">
+               commandName="graduateWork" enctype="multipart/form-data">
         <div class="form-group row">
             <label class="col-sm-2 form-control-label" for="subject">Тема:</label>
             <form:input path="subject" type="text" class="form-control"
@@ -122,7 +122,7 @@
         <br/>
         <fieldset class="form-group">
             <label for="file">Завантажити</label>
-            <input type="file" class="form-control-file" id="file"/>
+            <input type="file" class="form-control-file" id="file" name="file"/>
         </fieldset>
         <br/>
         <br/>
