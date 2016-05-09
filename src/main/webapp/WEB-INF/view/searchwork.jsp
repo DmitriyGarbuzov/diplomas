@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,35 +46,38 @@
 </nav>
 <!-- Body -->
 <div class="container">
-    <form role="form" action="<c:url value="/search" />" method="POST">
+    <c:url var="searchAction" value="/search"></c:url>
+    <form:form role="form" action="${searchAction}" commandName="searchDto" method="POST">
         <div class="form-group row">
-            <label class="col-sm-2 form-control-label" for="subject">Текст для пошуку:</label>
-            <textarea class="form-control" id="textarea" rows="3"></textarea>
+            <label class="col-sm-2 form-control-label" for="textarea">Текст для пошуку:</label>
+            <form:textarea path="searchText" class="form-control" id="textarea" rows="3"/>
         </div>
         <div class="form-group row">
             <label class="col-sm-2">Тип пошуку</label>
             <div class="col-sm-10">
                 <div class="radio">
-                    <label> <input type="radio" name="gridRadios"
-                                   id="gridRadios1" value="1" checked>Пошук за Темою
-                    </label>
-                </div>
-                <div class="radio">
-                    <label> <input type="radio" name="gridRadios"
-                                   id="gridRadios2" value="2" disabled> Пошук за ключовимт словами
+                    <label> <form:radiobutton path="searchType"  name="gridRadio1"
+                                   id="gridRadios1" value="1" checked="true"/>Пошук за Темою
                     </label>
                 </div>
                 <div class="radio disabled">
-                    <label> <input type="radio" name="gridRadios"
-                                   id="gridRadios3" value="3" disabled> Пошук за текстом робіт
+                    <label> <form:radiobutton path="searchType" name="gridRadio2"
+                                   id="gridRadios2" value="2" disabled="true"/> Пошук за ключовимт словами
+                    </label>
+                </div>
+                <div class="radio disabled">
+                    <label> <form:radiobutton path="searchType" name="gridRadio3"
+                                   id="gridRadios3" value="3" disabled="true"/> Пошук за текстом робіт
                     </label>
                 </div>
             </div>
         </div>
         <button type="submit" class="btn btn-success">Пошук</button>
-        <button type="submit" class="btn btn-danger">Назад</button>
-    </form>
+        <button type="button" onclick="history.go(-1);" class="btn btn-danger">Назад</button>
+    </form:form>
+    <br/>
     <c:if test="${!empty graduateWorkList}">
+        <h2>Результат пошуку:</h2>
         <div class="row">
             <div class="col-md-29 col-md-offset-1">
                 <div class="panel panel-default panel-table">

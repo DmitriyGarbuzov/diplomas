@@ -14,7 +14,9 @@ import com.diplomas.entity.GraduateWork;
 
 @Repository
 public interface GraduateWorkRepository extends JpaRepository<GraduateWork, Long> {
-    
+
+    List<GraduateWork> findAllBySubject(String subject);
+
     List<GraduateWork> findAllByDegreeId(Long degreeId);
     
     GraduateWork findOneByUuid(UUID uuid);
