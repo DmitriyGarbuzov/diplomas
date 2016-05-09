@@ -7,6 +7,7 @@ import com.diplomas.repository.HeadWorkRepository;
 import com.diplomas.repository.StudentGroupRepository;
 import com.diplomas.repository.StudentRepository;
 import com.diplomas.service.CheckService;
+import com.diplomas.service.GoogleDriveService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,9 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
     @Autowired
     private CheckService checkService;
 
+    @Autowired
+    private GoogleDriveService googleDriveService;
+
     @Override
     protected GraduateWork doBackward(GraduateWorkDTO dto) {
         GraduateWork entity = null;
@@ -60,7 +64,7 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
             entity = graduateWorkRepository.findOneByUuid(dto.getUuid());
             entity = perfomUpdate(dto, entity);
         } else {
-            entity = perfomNewEntity(dto, entity);
+            entity = perfomNewEntity(dto);
         }
         return entity;
     }
@@ -118,11 +122,16 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
             }
             oldEntity.setHeadWork(Optional.ofNullable(dto.getHeadWork()).map(headWorkConverter.reverse()::convert).orElse(null));
         }
+        if (!checkService.equals(dto.getFile().getOriginalFilename(),oldEntity.getFileName())) {
+            googleDriveService.removeFile(oldEntity.getSelfHref());
+            oldEntity.setFileName(dto.getFile().getOriginalFilename());
+            oldEntity.setSelfHref(googleDriveService.uploadGraduateWork(dto.getFile()));
+        }
         return oldEntity;
     }
 
-    private GraduateWork perfomNewEntity(GraduateWorkDTO dto, GraduateWork entity) {
-        entity = new GraduateWork();
+    private GraduateWork perfomNewEntity(GraduateWorkDTO dto) {
+        GraduateWork entity = new GraduateWork();
         entity.setSubject(dto.getSubject());
         entity.setYear(dto.getYear());
         entity.setDegree(Optional.ofNullable(dto.getDegree()).map(degreeConverter.reverse()::convert).orElse(null));
@@ -130,11 +139,8 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
         entity.setCathedra(Optional.ofNullable(dto.getCathedra()).map(cathedraConverter.reverse()::convert).orElse(null));
         entity.setGroup(Optional.ofNullable(dto.getGroup()).map(studentGroupConverter.reverse()::convert).orElse(null));
         entity.setHeadWork(Optional.ofNullable(dto.getHeadWork()).map(headWorkConverter.reverse()::convert).orElse(null));
-
-        // TODO : implement with GoogleDrive
-        entity.setFileName("fileName.doc");
-        entity.setSelfHref("http://vk.com");
-        // ------------------------------
+        entity.setFileName(dto.getFile().getOriginalFilename());
+        entity.setSelfHref(googleDriveService.uploadGraduateWork(dto.getFile()));
         return entity;
     }
 }

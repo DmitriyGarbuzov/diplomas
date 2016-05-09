@@ -1,8 +1,8 @@
-<%@ taglib prefix="sec"  uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"  language="java" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,6 +47,24 @@
 </nav>
 <!-- Body -->
 <div class="container">
+    <c:if test="${!empty addEditSuccessMess}">
+    <div class="alert alert-success fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Успіх!</strong> ${addEditSuccessMess}.
+    </div>
+    </c:if>
+    <c:if test="${!empty removeSuccessMess}">
+    <div class="alert alert-success fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Успіх!</strong> ${removeSuccessMess}.
+    </div>
+    </c:if>
+    <c:if test="${!empty removeErrorMess}">
+        <div class="alert alert-danger fade in">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>Помилка!</strong> ${removeErrorMess}.
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-md-29 col-md-offset-1">
             <div class="panel panel-default panel-table">
@@ -81,10 +99,9 @@
                                 <td align="center">
                                     <a href="<c:url value='/edit/${graduateWork.uuid}' />" class="btn btn-default"><em
                                             class="fa fa-pencil"></em></a>
-                                    <form:form action="/remove/${graduateWork.uuid}" method="post">
-                                    <button type="submit" class="btn btn-danger"><em
-                                            class="fa fa-trash"></em></button></td>
-                                    </form:form>
+                                    <a href="#myModal_${graduateWork.uuid}" role="button" class="btn btn-danger" data-toggle="modal"><em
+                                            class="fa fa-trash"></em></a>
+                                </td>
                                 <td>${graduateWork.subject}</td>
                                 <td>${graduateWork.student.surname}
                                         ${graduateWork.student.firstName}
@@ -96,8 +113,28 @@
                                         ${graduateWork.headWork.firstName}
                                         ${graduateWork.headWork.patronymic}</td>
                                 <td>${graduateWork.year}</td>
-                                <td><a href="${graduateWork.selfHref}">${graduateWork.fileName}</a></td>
+                                <td><a href="${graduateWork.selfHref}" target="_blank">${graduateWork.fileName}</a></td>
                             </tr>
+                            <div id="myModal_${graduateWork.uuid}" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Підтвердження видилення</h4>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <p>Ви впевнені що хочите видалити цю дипломну роботу? </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form:form id="formRemove" action="/remove/${graduateWork.uuid}" method="post">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                                                <a href="javascript:;" title="Delete" onclick="document.getElementById('formRemove').submit();"><i class="fa fa-trash-o"></i>Видалити</a>
+                                            </form:form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </c:forEach>
                         </tbody>
                     </table>

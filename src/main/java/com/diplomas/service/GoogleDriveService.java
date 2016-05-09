@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.diplomas.entity.GraduateWork;
 import com.diplomas.repository.GraduateWorkRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class GoogleDriveService {
@@ -17,8 +18,8 @@ public class GoogleDriveService {
     @Autowired
     private GraduateWorkRepository graduateWorkRepository;
     
-    public String uploadGraduateWork(File file) {
-    	return "";
+    public String uploadGraduateWork(MultipartFile file) {
+    	return "http://vk.com";
     }
     
     public List<GraduateWork> searchGraduateWorks(String text){

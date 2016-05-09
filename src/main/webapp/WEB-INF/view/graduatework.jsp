@@ -56,6 +56,12 @@
     </c:if>
     <form:form role="form" action="${saveUpdateAction}" method="POST"
                commandName="graduateWork" enctype="multipart/form-data">
+        <c:if test="${!empty addEditErrorMess}">
+            <div class="alert alert-danger fade in">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>Помилка!</strong> ${addEditErrorMess}
+            </div>
+        </c:if>
         <div class="form-group row">
             <label class="col-sm-2 form-control-label" for="subject">Тема:</label>
             <form:input path="subject" type="text" class="form-control"
@@ -102,24 +108,31 @@
         <div class="form-group row">
             <label class="col-sm-2 form-control-label" for="st_group">Група:</label>
             <form:input path="group.groupName" type="text" class="form-control"
-                        id="st_group"/>
+                        id="st_group" required="true"/>
         </div>
         <h3>Керівник</h3>
         <div class="form-group row">
             <label class="col-sm-2 form-control-label" for="hw_surname">Фамілія:</label>
             <form:input path="headWork.surname" type="text" class="form-control"
-                        id="hw_surname"/>
+                        id="hw_surname" required="true"/>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 form-control-label" for="hw_name">Ім'я:</label>
             <form:input path="headWork.firstName" type="text"
-                        class="form-control" id="hw_name"/>
+                        class="form-control" id="hw_name" required="true"/>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 form-control-label" for="hw_patronymic">По батькові:</label>
-            <form:input path="headWork.patronymic" type="text" class="form-control" id="hw_patronymic"/>
+            <form:input path="headWork.patronymic" type="text" class="form-control" id="hw_patronymic" required="true"/>
         </div>
         <br/>
+        <c:if test="${!empty graduateWork.fileName and !empty graduateWork.selfHref}">
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label" for="fileHref">Завантажений файл:</label>
+                <label class="col-sm-2 form-control-label" id="fileHref"><a
+                        href="${graduateWork.selfHref}" target="_blank">${graduateWork.fileName}</a></label>
+            </div>
+        </c:if>
         <fieldset class="form-group">
             <label for="file">Завантажити</label>
             <input type="file" class="form-control-file" id="file" name="file"/>
@@ -128,13 +141,13 @@
         <br/>
         <br/>
         <c:if test="${!empty graduateWork.uuid}">
-            <form:hidden path="uuid" />
+            <form:hidden path="uuid"/>
             <button type="submit" class="btn btn-success">Оновити</button>
         </c:if>
         <c:if test="${empty graduateWork.uuid}">
             <button type="submit" class="btn btn-success">Зберегти</button>
         </c:if>
-        <button type="submit" class="btn btn-danger">Назад</button>
+        <button type="button" onclick="history.go(-1);" class="btn btn-danger">Назад</button>
     </form:form>
     <br/> <br/> <br/> <br/> <br/> <br/>
 </div>

@@ -1,29 +1,33 @@
 package com.diplomas.web.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.UUID;
 
 public class GraduateWorkDTO {
-    
+
     private UUID uuid;
-    
+
     private String subject;
-    
+
     private String fileName;
-    
+
     private String selfHref;
-    
+
     private String year;
-    
+
     private StudentDTO student;
-    
+
     private CathedraDTO cathedra;
-    
+
     private StudentGroupDTO group;
-    
+
     private DegreeDTO degree;
-    
+
     private HeadWorkDTO headWork;
-    
+
+    private MultipartFile file;
+
     public UUID getUuid() {
         return uuid;
     }
@@ -39,16 +43,16 @@ public class GraduateWorkDTO {
     public void setSubject(String subject) {
         this.subject = subject;
     }
-    
+
     public String getFileName() {
-		return fileName;
-	}
+        return fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public String getSelfHref() {
+    public String getSelfHref() {
         return selfHref;
     }
 
@@ -72,23 +76,23 @@ public class GraduateWorkDTO {
         this.student = student;
     }
 
-	public CathedraDTO getCathedra() {
-		return cathedra;
-	}
+    public CathedraDTO getCathedra() {
+        return cathedra;
+    }
 
-	public void setCathedra(CathedraDTO cathedra) {
-		this.cathedra = cathedra;
-	}
+    public void setCathedra(CathedraDTO cathedra) {
+        this.cathedra = cathedra;
+    }
 
-	public StudentGroupDTO getGroup() {
-		return group;
-	}
+    public StudentGroupDTO getGroup() {
+        return group;
+    }
 
-	public void setGroup(StudentGroupDTO group) {
-		this.group = group;
-	}
+    public void setGroup(StudentGroupDTO group) {
+        this.group = group;
+    }
 
-	public DegreeDTO getDegree() {
+    public DegreeDTO getDegree() {
         return degree;
     }
 
@@ -104,9 +108,17 @@ public class GraduateWorkDTO {
         this.headWork = headWork;
     }
 
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
     @Override
-	public String toString() {
-		return "GraduateWorkDTO [uuid=" + uuid + ", subject=" + subject + ", selfHref=" + selfHref + ", year=" + year
-				+ ", student=" + student + ", degree=" + degree + ", headWork=" + headWork + "]";
-	}
+    public String toString() {
+        return "GraduateWorkDTO [uuid=" + uuid + ", subject=" + subject + ", selfHref=" + selfHref + ", year=" + year
+                + ", student=" + student + ", degree=" + degree + ", headWork=" + headWork + "]";
+    }
 }

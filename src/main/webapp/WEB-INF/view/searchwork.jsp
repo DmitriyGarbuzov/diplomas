@@ -74,7 +74,55 @@
         <button type="submit" class="btn btn-danger">Назад</button>
     </form>
     <c:if test="${!empty graduateWorkList}">
-
+        <div class="row">
+            <div class="col-md-29 col-md-offset-1">
+                <div class="panel panel-default panel-table">
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-list">
+                            <thead>
+                            <tr>
+                                <th><em class="fa fa-cog"></em></th>
+                                <th>Тема</th>
+                                <th>Студент</th>
+                                <th>Факультет</th>
+                                <th>Кафедра</th>
+                                <th>Група</th>
+                                <th>Керівник</th>
+                                <th>Рік</th>
+                                <th>Текст роботи</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${graduateWorkList}" var="graduateWork">
+                                <tr>
+                                    <td align="center">
+                                        <a href="<c:url value='/edit/${graduateWork.uuid}' />" class="btn btn-default"><em
+                                                class="fa fa-pencil"></em></a>
+                                        <form:form action="/remove/${graduateWork.uuid}" method="post">
+                                        <button type="submit" class="btn btn-danger"><em
+                                                class="fa fa-trash"></em></button>
+                                    </td>
+                                    </form:form>
+                                    <td>${graduateWork.subject}</td>
+                                    <td>${graduateWork.student.surname}
+                                            ${graduateWork.student.firstName}
+                                            ${graduateWork.student.patronymic}</td>
+                                    <td>${graduateWork.cathedra.faculty.facultyName}</td>
+                                    <td>${graduateWork.cathedra.cathedraName}</td>
+                                    <td>${graduateWork.group.groupName}</td>
+                                    <td>${graduateWork.headWork.surname}
+                                            ${graduateWork.headWork.firstName}
+                                            ${graduateWork.headWork.patronymic}</td>
+                                    <td>${graduateWork.year}</td>
+                                    <td><a href="${graduateWork.selfHref}" target="_blank">${graduateWork.fileName}</a></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </c:if>
 </div>
 <!-- Footer -->
