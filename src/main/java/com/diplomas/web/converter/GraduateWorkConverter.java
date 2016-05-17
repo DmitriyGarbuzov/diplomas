@@ -2,12 +2,11 @@ package com.diplomas.web.converter;
 
 import java.util.Optional;
 
-import com.diplomas.controller.MainController;
 import com.diplomas.repository.HeadWorkRepository;
 import com.diplomas.repository.StudentGroupRepository;
 import com.diplomas.repository.StudentRepository;
 import com.diplomas.service.CheckService;
-import com.diplomas.service.GoogleDriveService;
+import com.diplomas.service.DropBoxService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +54,7 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
     private CheckService checkService;
 
     @Autowired
-    private GoogleDriveService googleDriveService;
+    private DropBoxService dropBoxService;
 
     @Override
     protected GraduateWork doBackward(GraduateWorkDTO dto) {
@@ -123,9 +122,9 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
             oldEntity.setHeadWork(Optional.ofNullable(dto.getHeadWork()).map(headWorkConverter.reverse()::convert).orElse(null));
         }
         if (!checkService.equals(dto.getFile().getOriginalFilename(),oldEntity.getFileName())) {
-            googleDriveService.removeFile(oldEntity.getSelfHref());
+            dropBoxService.removeGraduateWork(oldEntity.getFileName());
             oldEntity.setFileName(dto.getFile().getOriginalFilename());
-            oldEntity.setSelfHref(googleDriveService.uploadGraduateWork(dto.getFile()));
+            oldEntity.setSelfHref(dropBoxService.uploadGraduateWork(dto.getFile()));
         }
         return oldEntity;
     }
@@ -140,7 +139,7 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
         entity.setGroup(Optional.ofNullable(dto.getGroup()).map(studentGroupConverter.reverse()::convert).orElse(null));
         entity.setHeadWork(Optional.ofNullable(dto.getHeadWork()).map(headWorkConverter.reverse()::convert).orElse(null));
         entity.setFileName(dto.getFile().getOriginalFilename());
-        entity.setSelfHref(googleDriveService.uploadGraduateWork(dto.getFile()));
+        entity.setSelfHref(dropBoxService.uploadGraduateWork(dto.getFile()));
         return entity;
     }
 }

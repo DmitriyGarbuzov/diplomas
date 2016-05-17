@@ -5,10 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.diplomas.controller.MainController;
 import com.diplomas.entity.GraduateWork;
-import com.diplomas.entity.Student;
-import com.diplomas.entity.StudentGroup;
 import com.diplomas.repository.HeadWorkRepository;
 import com.diplomas.repository.StudentGroupRepository;
 import com.diplomas.repository.StudentRepository;
@@ -35,7 +32,7 @@ public class GraduateWorkService {
     private GraduateWorkRepository graduateWorkRepository;
     
     @Autowired
-    private GoogleDriveService googleDriveService;
+    private DropBoxService dropBoxService;
 
 	@Autowired
 	private HeadWorkRepository headWorkRepository;
@@ -75,7 +72,7 @@ public class GraduateWorkService {
 		GraduateWorkDTO dto = Optional.ofNullable(entity)
 				.map(graduateWorkConverter::convert)
 				.orElse(null);
-		googleDriveService.removeFile(entity.getSelfHref());
+		dropBoxService.removeGraduateWork(entity.getFileName());
 		if(entity != null) {
 			try {
 				studentRepository.delete(entity.getStudent());
@@ -90,7 +87,7 @@ public class GraduateWorkService {
 	}
     
     public List<GraduateWorkDTO> searchGraduateWorks(SearchDTO dto) {
-    	return googleDriveService.searchGraduateWorks(dto.getSearchText())
+    	return dropBoxService.searchGraduateWorks(dto.getSearchText())
     			.stream()
     			.map(graduateWorkConverter::convert)
     			.collect(Collectors.toList());
