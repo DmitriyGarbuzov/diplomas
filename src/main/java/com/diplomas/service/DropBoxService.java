@@ -1,5 +1,6 @@
 package com.diplomas.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class DropBoxService {
     private GraduateWorkRepository graduateWorkRepository;
 
     //TODO:[Buzov] Maybe move to file recources
-    private static final String access_token = "5m7mQqmL3gAAAAAAAAAAC8fur7Q1SxgwSbsMGoveH2cxmdri8KdDoBvnaRE_LUTG";
+    private static final String access_token = "nqHMfD0M2tAAAAAAAAAAB4AGJ4xLj1qrXGWespuoTtDMIF7YQYXEFGHm39dIeXKl";
 
     private DbxClient client;
 
@@ -37,20 +38,30 @@ public class DropBoxService {
             logger.debug("Successful upload file to dropbox '{}' ", filePath);
         } catch (Exception e) {
             logger.error("Can't upload file to dropbox '{}' , exception '{}'", filePath, e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
         String href = null;
         try {
             href = client.createShareableUrl("/" + file.getOriginalFilename());
             logger.debug("Successful get shared link to file '{}', href '{}' ", filePath, href);
         } catch (DbxException e) {
-            e.printStackTrace();
+            logger.error("Can't upload file to dropbox '{}' , exception '{}'", filePath, e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
         return href;
     }
 
     public List<GraduateWork> searchGraduateWorks(String text) {
-        List<String> fileNames = getAllGraduateWorksFileNames();
-        return null;
+        //List<String> fileNames = getAllGraduateWorksFileNames();
+        DbxClient client = getClient();
+        try {
+            client.searchFileAndFolderNames("/",text);
+        } catch (DbxException e) {
+            logger.error("Can't search inside dropbox  files , exception '{}'", e.getLocalizedMessage());
+            throw new RuntimeException(e);
+        }
+
+        return Collections.EMPTY_LIST;
     }
 
     public void removeGraduateWork(String fileName) {
@@ -61,7 +72,7 @@ public class DropBoxService {
             logger.debug("Successful remove file from dropbox '{}' ", filePath);
         } catch (DbxException e) {
             logger.error("Can't remove file from dropbox '{}' , exception '{}'", filePath, e.getLocalizedMessage());
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -86,9 +97,10 @@ public class DropBoxService {
         DbxRequestConfig config = new DbxRequestConfig("JavaTutorial/1.0", Locale.getDefault().toString());
         DbxClient client = new DbxClient(config, access_token);
         try {
-            System.out.println("Linked account: " + client.getAccountInfo().displayName);
+            logger.debug("Linked account of drop box : " + client.getAccountInfo().displayName);
         } catch (DbxException e) {
-            e.printStackTrace();
+            logger.error("Check connection to dropbox '{}'  fail, exception '{}'", access_token, e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
         return client;
     }

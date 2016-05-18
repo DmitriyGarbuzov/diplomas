@@ -62,12 +62,12 @@
                 </div>
                 <div class="radio disabled">
                     <label> <form:radiobutton path="searchType" name="gridRadio2"
-                                   id="gridRadios2" value="2" disabled="true"/> Пошук за ключовимт словами
+                                   id="gridRadios2" value="2" disabled="true"/> Пошук за ключовими словами
                     </label>
                 </div>
                 <div class="radio disabled">
                     <label> <form:radiobutton path="searchType" name="gridRadio3"
-                                   id="gridRadios3" value="3" disabled="true"/> Пошук за текстом робіт
+                                   id="gridRadios3" value="3" disabled="false"/> Пошук за текстом робіт
                     </label>
                 </div>
             </div>
