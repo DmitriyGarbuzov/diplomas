@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class SearchService {
 
     @Autowired
-    private DropBoxService dropBoxService;
+    private GoogleDriveService googleDriveService;
 
     @Autowired
     private GraduateWorkRepository graduateWorkRepository;
@@ -56,6 +56,6 @@ public class SearchService {
     }
 
     private List<GraduateWork> searchByText(String searchText) {
-        return dropBoxService.searchGraduateWorks(searchText);
+        return googleDriveService.searchGraduateWorks(searchText);
     }
 }
