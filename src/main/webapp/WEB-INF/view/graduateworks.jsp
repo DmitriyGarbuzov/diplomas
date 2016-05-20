@@ -79,6 +79,10 @@
                     </div>
                 </div>
                 <div class="panel-body">
+                <div class="input-group"> <span class="input-group-addon">Фільтр</span>
+
+   						 <input id="filter" type="text" class="form-control" placeholder="Ключове слово...">
+					</div>
                     <table class="table table-striped table-bordered table-list">
                         <thead>
                         <tr>
