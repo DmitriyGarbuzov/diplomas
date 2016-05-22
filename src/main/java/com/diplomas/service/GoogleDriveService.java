@@ -30,7 +30,7 @@ public class GoogleDriveService {
 
 
     public String uploadGraduateWork(MultipartFile file) {
-        File body = new File();
+        /*File body = new File();
         body.setName(file.getOriginalFilename());
         body.setMimeType(file.getContentType());
         body.setOriginalFilename(file.getOriginalFilename());
@@ -54,7 +54,8 @@ public class GoogleDriveService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return body.getWebViewLink();
+        return body.getWebViewLink();*/
+        return "";
     }
 
     public List<GraduateWork> searchGraduateWorks(String text) {
