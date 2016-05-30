@@ -1,43 +1,22 @@
 package com.diplomas.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.diplomas.entity.enumeration.Role;
 
+import javax.persistence.*;
+
+/**
+ * Created by Dima on 30.05.2016.
+ */
 @Entity
-@Table(name = "users")
+@Table(name="users")
 public class User extends BaseEntity{
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
-	@Column(name = "username")
-	private String username;
-	
-	@Column(name = "password")
-	private String password;
-	
-	@Column(name = "enabled")
-	private boolean enabled;
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
