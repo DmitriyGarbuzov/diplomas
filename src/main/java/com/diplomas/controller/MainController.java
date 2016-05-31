@@ -42,6 +42,11 @@ public class MainController {
     @Autowired
     private DegreeService degreeService;
 
+    @RequestMapping(value="/" , method= RequestMethod.GET)
+    public String home() {
+        return "home";
+    }
+
     @RequestMapping(value = "/bachelors", method = RequestMethod.GET)
     public String bachelorsGraduateWorkList(Model model) {
         return graduateWorkList(model, Degree.BACHELOR_DEGREE_PK);

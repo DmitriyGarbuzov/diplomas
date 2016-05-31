@@ -4,13 +4,15 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 	<changeSet author="grinyk.nikolay" id="1">
 		<sql>
-			<!--drop table if exists cathedra cascade;
+			drop table if exists cathedra cascade;
 			drop table if exists degree cascade;
 			drop table if exists faculty cascade;
 			drop table if exists graduate_work cascade;
 			drop table if exists head_work cascade;
 			drop table if exists student cascade;
 			drop table if exists student_group cascade;
+			drop table if exists user_roles cascade;
+			drop table if exists users cascade;
 			drop sequence if exists hibernate_sequence;
 
 			create table cathedra (id int8 not null, cathedra_name varchar(255) not null, faculty_id int8 not null, primary key (id));
@@ -20,6 +22,8 @@
 			create table head_work (id int8 not null, first_name varchar(255) not null, patronymic varchar(255) not null, surname varchar(255) not null, uuid uuid not null, primary key (id));
 			create table student (id int8 not null, first_name varchar(255) not null, patronymic varchar(255) not null, surname varchar(255) not null, uuid uuid not null, primary key (id));
 			create table student_group (id int8 not null, group_name varchar(255) not null, primary key (id));
+			create table user_roles (user_role_id int8 not null, role varchar(255), userid int8, primary key (user_role_id));
+			create table users (userid int8 not null, email varchar(255), enabled int4, password varchar(255), username varchar(255), primary key (userid));
 
 			alter table graduate_work add constraint UK_n96vrirfkojw1h6gtln4w2m5l  unique (uuid);
 			alter table head_work add constraint UK_lsxm9gemqeaqj8nubs8qmahvp  unique (uuid);
@@ -92,8 +96,11 @@
 			INSERT into cathedra (id, cathedra_name,faculty_id) values (36, 'Кафедра прикладної лінгвістики',7);
 			INSERT into cathedra (id, cathedra_name,faculty_id) values (37, 'Кафедра романо-германської філології та перекладу',7);
 			INSERT into cathedra (id, cathedra_name,faculty_id) values (38, 'Кафедра іноземних мов',7);
-			INSERT into cathedra (id, cathedra_name,faculty_id) values (39, 'Кафедра української мови та загального мовознавства',7);-->
+			INSERT into cathedra (id, cathedra_name,faculty_id) values (39, 'Кафедра української мови та загального мовознавства',7);
 
+			<!--Insert admin user {admin,admin}-->
+			INSERT into users (userid, username,email, password, enabled) VALUES (1, 'admin', 'admin@mail.ru', '$2a$04$ycwcimWSglHdGvEFiN5CBeo6We9WH9hwfQsvEvi7vnVHab2uckDVW',1);
+			INSERT into user_roles (user_role_id, userid, role) VALUES (1, 1, 'ROLE_ADMIN');
 		</sql>
 	</changeSet>
 </databaseChangeLog>
