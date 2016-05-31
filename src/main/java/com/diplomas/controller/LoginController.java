@@ -20,6 +20,6 @@ public class LoginController {
     }
     @RequestMapping(value= "/registration", method = RequestMethod.POST)
     public String register () {
-        return "bachelors";
+        return "redirect:/login";
     }
 }
