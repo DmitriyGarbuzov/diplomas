@@ -2,11 +2,16 @@ package com.diplomas.web.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class GraduateWorkDTO {
 
     private UUID uuid;
+
+    private Date createdTs;
+
+    private Date modifyTs;
 
     private String subject;
 
@@ -34,6 +39,22 @@ public class GraduateWorkDTO {
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
+    }
+
+    public Date getCreatedTs() {
+        return createdTs;
+    }
+
+    public void setCreatedTs(Date createdTs) {
+        this.createdTs = createdTs;
+    }
+
+    public Date getModifyTs() {
+        return modifyTs;
+    }
+
+    public void setModifyTs(Date modifyTs) {
+        this.modifyTs = modifyTs;
     }
 
     public String getSubject() {

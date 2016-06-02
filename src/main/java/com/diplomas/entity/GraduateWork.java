@@ -7,8 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 
 @Entity
@@ -18,7 +22,18 @@ public class GraduateWork extends BaseEntity{
     @Type(type = "pg-uuid")
     @Column(name = "uuid", unique = true, nullable = false)
     private UUID uuid = UUID.randomUUID();
-    
+
+    @CreatedDate
+    @NotNull
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @Column(name = "created_ts", nullable = false)
+    private DateTime createdTs;
+
+    @LastModifiedDate
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @Column(name = "modified_ts")
+    private DateTime modifiedTs;
+
     @Column(name = "subject", nullable = false)
     private String subject;
     
@@ -57,6 +72,22 @@ public class GraduateWork extends BaseEntity{
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
+    }
+
+    public DateTime getCreatedTs() {
+        return createdTs;
+    }
+
+    public void setCreatedTs(DateTime createdTs) {
+        this.createdTs = createdTs;
+    }
+
+    public DateTime getModifiedTs() {
+        return modifiedTs;
+    }
+
+    public void setModifiedTs(DateTime modifiedTs) {
+        this.modifiedTs = modifiedTs;
     }
 
     public String getSubject() {
