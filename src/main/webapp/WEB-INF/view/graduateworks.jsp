@@ -18,6 +18,9 @@
     <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"
             rel='stylesheet' type='text/css'>
+            <link
+            href="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.css"
+            rel='stylesheet' type='text/css'>
 </head>
 <body>
 <!-- Header -->
@@ -83,17 +86,17 @@
 
    						 <input id="filter" type="text" class="form-control" placeholder="Ключове слово...">
 					</div>
-                    <table class="table table-striped table-bordered table-list">
+                    <table class="table table-striped table-bordered table-list"  data-toggle="table">
                         <thead>
                         <tr>
                             <th><em class="fa fa-cog"></em></th>
-                            <th>Тема</th>
-                            <th>Студент</th>
-                            <th>Факультет</th>
-                            <th>Кафедра</th>
-                            <th>Група</th>
-                            <th>Керівник</th>
-                            <th>Рік</th>
+                            <th data-field="theme" data-sortable="true">Тема</th>
+                            <th data-field="student" data-sortable="true">Студент</th>
+                            <th data-field="faculty" data-sortable="true">Факультет</th>
+                            <th data-field="cathedra" data-sortable="true">Кафедра</th>
+                            <th data-field="group" data-sortable="true">Група</th>
+                            <th data-field="instructor" data-sortable="true">Керівник</th>
+                            <th data-field="year" data-sortable="true">Рік</th>
                             <th>Текст роботи</th>
                         </tr>
                         </thead>
@@ -173,4 +176,7 @@
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script
         src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        
+        <script
+        src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
 </body>
