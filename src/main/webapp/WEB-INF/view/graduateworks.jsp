@@ -100,7 +100,7 @@
                             <th>Текст роботи</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody  class="searchable">
                         <c:forEach items="${graduateWorkList}" var="graduateWork">
                             <tr>
                                 <td align="center">
@@ -179,4 +179,22 @@
         
         <script
         src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
+     <script>   
+        $(document).ready(function () {
+
+    (function ($) {
+
+        $('#filter').keyup(function () {
+
+            var rex = new RegExp($(this).val(), 'i');
+            $('.searchable tr').hide();
+            $('.searchable tr').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+
+        })
+
+    }(jQuery));
+
+});</script>
 </body>
