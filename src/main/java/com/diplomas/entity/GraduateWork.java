@@ -23,16 +23,7 @@ public class GraduateWork extends BaseEntity{
     @Column(name = "uuid", unique = true, nullable = false)
     private UUID uuid = UUID.randomUUID();
 
-    @CreatedDate
-    @NotNull
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @Column(name = "created_ts", nullable = false)
-    private DateTime createdTs;
-
-    @LastModifiedDate
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @Column(name = "modified_ts")
-    private DateTime modifiedTs;
+   
 
     @Column(name = "subject", nullable = false)
     private String subject;
@@ -74,21 +65,7 @@ public class GraduateWork extends BaseEntity{
         this.uuid = uuid;
     }
 
-    public DateTime getCreatedTs() {
-        return createdTs;
-    }
-
-    public void setCreatedTs(DateTime createdTs) {
-        this.createdTs = createdTs;
-    }
-
-    public DateTime getModifiedTs() {
-        return modifiedTs;
-    }
-
-    public void setModifiedTs(DateTime modifiedTs) {
-        this.modifiedTs = modifiedTs;
-    }
+    
 
     public String getSubject() {
         return subject;

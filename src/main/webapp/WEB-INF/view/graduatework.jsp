@@ -4,7 +4,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -18,6 +18,10 @@
     <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"
             rel='stylesheet' type='text/css'>
+            <link
+            href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.css"
+            rel='stylesheet' type='text/css'>
+            
 </head>
 <body>
 <!-- Header -->
@@ -126,6 +130,23 @@
             <form:input path="headWork.patronymic" type="text" class="form-control" id="hw_patronymic" required="true"/>
         </div>
         <br/>
+     
+           <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="hw_surname">Дата нормоконтролю:</label>
+        <div id="sandbox-container">
+    <input type="text" type="text" class="form-control" />
+</div></div>
+   <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="hw_surname">Дата предзахисту:</label>
+        <div id="sandbox-container">
+    <input type="text" type="text" class="form-control" />
+</div></div>
+   <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="hw_surname">Дата захисту:</label>
+        <div id="sandbox-container">
+    <input type="text" type="text" class="form-control" />
+</div>
+        </div>
         <c:if test="${!empty graduateWork.fileName and !empty graduateWork.selfHref}">
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label" for="fileHref">Завантажений файл:</label>
@@ -161,4 +182,33 @@
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script
         src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script
+        src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+        
+        <script>
+        $('#sandbox-container input').datepicker({
+            autoclose: true
+        });
+
+        $('#sandbox-container input').on('show', function(e){
+            console.debug('show', e.date, $(this).data('stickyDate'));
+            
+            if ( e.date ) {
+                 $(this).data('stickyDate', e.date);
+            }
+            else {
+                 $(this).data('stickyDate', null);
+            }
+        });
+
+        $('#sandbox-container input').on('hide', function(e){
+            console.debug('hide', e.date, $(this).data('stickyDate'));
+            var stickyDate = $(this).data('stickyDate');
+            
+            if ( !e.date && stickyDate ) {
+                console.debug('restore stickyDate', stickyDate);
+                $(this).datepicker('setDate', stickyDate);
+                $(this).data('stickyDate', null);
+            }
+        });</script>
 </body>

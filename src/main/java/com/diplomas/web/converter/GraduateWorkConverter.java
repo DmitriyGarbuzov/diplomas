@@ -73,8 +73,7 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
     protected GraduateWorkDTO doForward(GraduateWork entity) {
         GraduateWorkDTO dto = new GraduateWorkDTO();
         dto.setUuid(entity.getUuid());
-        dto.setCreatedTs(entity.getCreatedTs().toDate());
-        dto.setModifyTs(entity.getModifiedTs().toDate());
+      
         dto.setSubject(entity.getSubject());
         dto.setSelfHref(entity.getSelfHref());
         dto.setFileName(entity.getFileName());
@@ -88,7 +87,7 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
     }
 
     private GraduateWork perfomUpdate(GraduateWorkDTO dto, GraduateWork oldEntity) {
-        oldEntity.setModifiedTs(DateTime.now());
+        
         if (!checkService.equals(dto.getSubject(), oldEntity.getSubject())) {
             oldEntity.setSubject(dto.getSubject());
         }
@@ -135,7 +134,7 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
 
     private GraduateWork perfomNewEntity(GraduateWorkDTO dto) {
         GraduateWork entity = new GraduateWork();
-        entity.setCreatedTs(DateTime.now());
+    
         entity.setSubject(dto.getSubject());
         entity.setYear(dto.getYear());
         entity.setDegree(Optional.ofNullable(dto.getDegree()).map(degreeConverter.reverse()::convert).orElse(null));
