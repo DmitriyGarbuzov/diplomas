@@ -44,7 +44,17 @@
             <li><a href="/search">Пошук</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Login</a></li>
+        
+        <sec:authorize access="isAnonymous()">
+        <li ><a  href="login">Login </a></li>
+        <li ><a  href="registration">Registration </a></li>
+        </sec:authorize>
+     <sec:authorize access="isAuthenticated()">
+     <li> <p></p></li>
+		<li><a href="#>"><%= request.getUserPrincipal().getName() %></a></li>
+        <li><a href="logout">Logout </a></li>
+        </sec:authorize>
+            
         </ul>
     </div>
 </nav>
@@ -77,7 +87,9 @@
                             <h3 class="panel-title"></h3>
                         </div>
                         <div class="col col-xs-6 text-right">
-                            <a href="/add" class="btn btn-primary">Створити</a>
+                  <sec:authorize access="hasRole('ROLE_ADMIN')">
+       <a href="/add" class="btn btn-primary">Створити</a>
+       </sec:authorize> 
                         </div>
                     </div>
                 </div>
@@ -89,7 +101,7 @@
                     <table class="table table-striped table-bordered table-list"  data-toggle="table">
                         <thead>
                         <tr>
-                            <th><em class="fa fa-cog"></em></th>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">    <th><em class="fa fa-cog"></em></th></sec:authorize>
                             <th data-field="theme" data-sortable="true">Тема</th>
                             <th data-field="student" data-sortable="true">Студент</th>
                             <th data-field="faculty" data-sortable="true">Факультет</th>
@@ -103,12 +115,12 @@
                         <tbody  class="searchable">
                         <c:forEach items="${graduateWorkList}" var="graduateWork">
                             <tr>
-                                <td align="center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')"> <td align="center">
                                     <a href="<c:url value='/edit/${graduateWork.uuid}' />" class="btn btn-default"><em
                                             class="fa fa-pencil"></em></a>
                                     <a href="#myModal_${graduateWork.uuid}" role="button" class="btn btn-danger" data-toggle="modal"><em
                                             class="fa fa-trash"></em></a>
-                                </td>
+                                </td></sec:authorize>
                                 <td>${graduateWork.subject}</td>
                                 <td>${graduateWork.student.surname}
                                         ${graduateWork.student.firstName}

@@ -20,6 +20,8 @@ import com.diplomas.service.DegreeService;
 import com.diplomas.service.FacultyService;
 import com.diplomas.service.GraduateWorkService;
 import com.diplomas.web.dto.GraduateWorkDTO;
+
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +53,16 @@ public class MainController {
     public String bachelorsGraduateWorkList(Model model) {
         return graduateWorkList(model, Degree.BACHELOR_DEGREE_PK);
     }
+
+    @RequestMapping(value = {  "/403**" }, method = RequestMethod.GET)
+	public ModelAndView error() {
+ 
+		ModelAndView model = new ModelAndView();
+		
+		model.setViewName("403");
+		return model;
+ 
+	}
 
     @RequestMapping(value = "/specialists", method = RequestMethod.GET)
     public String specialistsGraduateWorkList(Model model) {
