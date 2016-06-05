@@ -18,7 +18,7 @@
     <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"
             rel='stylesheet' type='text/css'>
-            <link
+    <link
             href="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.css"
             rel='stylesheet' type='text/css'>
 </head>
@@ -44,33 +44,34 @@
             <li><a href="/search">Пошук</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-        
-        <sec:authorize access="isAnonymous()">
-        <li ><a  href="login">Login </a></li>
-        <li ><a  href="registration">Registration </a></li>
-        </sec:authorize>
-     <sec:authorize access="isAuthenticated()">
-     <li> <p></p></li>
-		<li><a href="#>"><%= request.getUserPrincipal().getName() %></a></li>
-        <li><a href="logout">Logout </a></li>
-        </sec:authorize>
-            
+
+            <sec:authorize access="isAnonymous()">
+                <li><a href="login">Login </a></li>
+                <li><a href="registration">Registration </a></li>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <li><p></p></li>
+                <li><a href="#>"><%= request.getUserPrincipal().getName() %>
+                </a></li>
+                <li><a href="<c:url value="/j_spring_security_logout"/>">Logout</a></li>
+            </sec:authorize>
+
         </ul>
     </div>
 </nav>
 <!-- Body -->
 <div class="container">
     <c:if test="${!empty addEditSuccessMess}">
-    <div class="alert alert-success fade in">
-        <a href="#" class="close" data-dismiss="alert">&times;</a>
-        <strong>Успіх!</strong> ${addEditSuccessMess}.
-    </div>
+        <div class="alert alert-success fade in">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>Успіх!</strong> ${addEditSuccessMess}.
+        </div>
     </c:if>
     <c:if test="${!empty removeSuccessMess}">
-    <div class="alert alert-success fade in">
-        <a href="#" class="close" data-dismiss="alert">&times;</a>
-        <strong>Успіх!</strong> ${removeSuccessMess}.
-    </div>
+        <div class="alert alert-success fade in">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>Успіх!</strong> ${removeSuccessMess}.
+        </div>
     </c:if>
     <c:if test="${!empty removeErrorMess}">
         <div class="alert alert-danger fade in">
@@ -131,14 +132,15 @@
                                 <td>${graduateWork.headWork.surname}
                                         ${graduateWork.headWork.firstName}
                                         ${graduateWork.headWork.patronymic}</td>
-                                <td>${graduateWork.year}</td>
+                                <td>${graduateWork.protectionDate}</td>
                                 <td><a href="${graduateWork.selfHref}" target="_blank">${graduateWork.fileName}</a></td>
                             </tr>
                             <div id="myModal_${graduateWork.uuid}" class="modal fade">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">&times;</button>
                                             <h4 class="modal-title">Підтвердження видилення</h4>
                                         </div>
 
@@ -146,9 +148,14 @@
                                             <p>Ви впевнені що хочите видалити цю дипломну роботу? </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form:form id="formRemove" action="/remove/${graduateWork.uuid}" method="post">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
-                                                <a href="javascript:;" title="Delete" onclick="document.getElementById('formRemove').submit();"><i class="fa fa-trash-o"></i>Видалити</a>
+                                            <form:form id="formRemove" action="/remove/${graduateWork.uuid}"
+                                                       method="post">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Закрити
+                                                </button>
+                                                <a href="javascript:;" title="Delete"
+                                                   onclick="document.getElementById('formRemove').submit();"><i
+                                                        class="fa fa-trash-o"></i>Видалити</a>
                                             </form:form>
                                         </div>
                                     </div>
@@ -158,24 +165,6 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- <div class="panel-footer">
-                    <div class="row">
-                        <div class="col col-xs-4">Page 1 of 5</div>
-                        <div class="col col-xs-8">
-                            <ul class="pagination hidden-xs pull-right">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                            </ul>
-                            <ul class="pagination visible-xs pull-right">
-                                <li><a href="#">«</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -188,25 +177,20 @@
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script
         src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        
-        <script
+
+<script
         src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
-     <script>   
-        $(document).ready(function () {
-
-    (function ($) {
-
-        $('#filter').keyup(function () {
-
-            var rex = new RegExp($(this).val(), 'i');
-            $('.searchable tr').hide();
-            $('.searchable tr').filter(function () {
-                return rex.test($(this).text());
-            }).show();
-
-        })
-
-    }(jQuery));
-
-});</script>
+<script>
+    $(document).ready(function () {
+        (function ($) {
+            $('#filter').keyup(function () {
+                var rex = new RegExp($(this).val(), 'i');
+                $('.searchable tr').hide();
+                $('.searchable tr').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+            })
+        }(jQuery));
+    });
+</script>
 </body>

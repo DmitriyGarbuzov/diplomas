@@ -23,19 +23,14 @@ public class GraduateWork extends BaseEntity{
     @Column(name = "uuid", unique = true, nullable = false)
     private UUID uuid = UUID.randomUUID();
 
-   
-
     @Column(name = "subject", nullable = false)
     private String subject;
     
-    @Column(name = "file_name", nullable = false)
+    @Column(name = "file_name", nullable = true)
     private String fileName;
     
-    @Column(name = "self_href", nullable = false)
+    @Column(name = "self_href", nullable = true)
     private String selfHref;
-    
-    @Column(name = "year", nullable = false)
-    private String year;
     
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
@@ -56,6 +51,15 @@ public class GraduateWork extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "head_work_id", nullable = false)
     private HeadWork headWork;
+
+    @Column(name = "control_of_norms", nullable = false)
+    private String controlOfNormsDate;
+
+    @Column(name = "pre_protection", nullable = false)
+    private String preProtectionDate;
+
+    @Column(name = "protection", nullable = false)
+    private String protectionDate;
     
     public UUID getUuid() {
         return uuid;
@@ -64,8 +68,6 @@ public class GraduateWork extends BaseEntity{
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
-
-    
 
     public String getSubject() {
         return subject;
@@ -89,14 +91,6 @@ public class GraduateWork extends BaseEntity{
 
     public void setSelfHref(String selfHref) {
         this.selfHref = selfHref;
-    }
-    
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
     }
 
     public Student getStudent() {
@@ -139,9 +133,45 @@ public class GraduateWork extends BaseEntity{
         this.headWork = headWork;
     }
 
+    public String getControlOfNormsDate() {
+        return controlOfNormsDate;
+    }
+
+    public void setControlOfNormsDate(String controlOfNormsDate) {
+        this.controlOfNormsDate = controlOfNormsDate;
+    }
+
+    public String getPreProtectionDate() {
+        return preProtectionDate;
+    }
+
+    public void setPreProtectionDate(String preProtectionDate) {
+        this.preProtectionDate = preProtectionDate;
+    }
+
+    public String getProtectionDate() {
+        return protectionDate;
+    }
+
+    public void setProtectionDate(String protectionDate) {
+        this.protectionDate = protectionDate;
+    }
+
     @Override
-	public String toString() {
-		return "GraduateWork [uuid=" + uuid + ", subject=" + subject + ", selfHref=" + selfHref + ", year=" + year
-				+ ", student=" + student + ", degree=" + degree + ", headWork=" + headWork + "]";
-	}
+    public String toString() {
+        return "GraduateWork{" +
+                "uuid=" + uuid +
+                ", subject='" + subject + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", selfHref='" + selfHref + '\'' +
+                ", student=" + student +
+                ", degree=" + degree +
+                ", cathedra=" + cathedra +
+                ", group=" + group +
+                ", headWork=" + headWork +
+                ", controlOfNormsDate='" + controlOfNormsDate + '\'' +
+                ", preProtectionDate='" + preProtectionDate + '\'' +
+                ", protectionDate='" + protectionDate + '\'' +
+                '}';
+    }
 }

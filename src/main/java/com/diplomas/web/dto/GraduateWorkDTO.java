@@ -9,17 +9,17 @@ public class GraduateWorkDTO {
 
     private UUID uuid;
 
-    private Date createdTs;
+    private String controlOfNormsDate;
 
-    private Date modifyTs;
+    private String preProtectionDate;
+
+    private String protectionDate;
 
     private String subject;
 
     private String fileName;
 
     private String selfHref;
-
-    private String year;
 
     private StudentDTO student;
 
@@ -41,20 +41,28 @@ public class GraduateWorkDTO {
         this.uuid = uuid;
     }
 
-    public Date getCreatedTs() {
-        return createdTs;
+    public String getControlOfNormsDate() {
+        return controlOfNormsDate;
     }
 
-    public void setCreatedTs(Date createdTs) {
-        this.createdTs = createdTs;
+    public void setControlOfNormsDate(String controlOfNormsDate) {
+        this.controlOfNormsDate = controlOfNormsDate;
     }
 
-    public Date getModifyTs() {
-        return modifyTs;
+    public String getPreProtectionDate() {
+        return preProtectionDate;
     }
 
-    public void setModifyTs(Date modifyTs) {
-        this.modifyTs = modifyTs;
+    public void setPreProtectionDate(String preProtectionDate) {
+        this.preProtectionDate = preProtectionDate;
+    }
+
+    public String getProtectionDate() {
+        return protectionDate;
+    }
+
+    public void setProtectionDate(String protectionDate) {
+        this.protectionDate = protectionDate;
     }
 
     public String getSubject() {
@@ -79,14 +87,6 @@ public class GraduateWorkDTO {
 
     public void setSelfHref(String selfHref) {
         this.selfHref = selfHref;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
     }
 
     public StudentDTO getStudent() {
@@ -139,7 +139,7 @@ public class GraduateWorkDTO {
 
     @Override
     public String toString() {
-        return "GraduateWorkDTO [uuid=" + uuid + ", subject=" + subject + ", selfHref=" + selfHref + ", year=" + year
+        return "GraduateWorkDTO [uuid=" + uuid + ", subject=" + subject + ", selfHref=" + selfHref
                 + ", student=" + student + ", degree=" + degree + ", headWork=" + headWork + "]";
     }
 }

@@ -48,14 +48,23 @@ public class SearchService {
     }
 
     private List<GraduateWork> searchBySubject(String text) {
-        return graduateWorkRepository.findAllBySubject(text);
+       return graduateWorkRepository
+                .findAll()
+                .stream()
+                .filter(document -> document.getSubject().toLowerCase().contains(text.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
-    private List<GraduateWork> searchByKeys(String searchText) {
+    private List<GraduateWork> searchByKeys(String text) {
         return new ArrayList<>();
     }
 
-    private List<GraduateWork> searchByText(String searchText) {
-        return googleDriveService.searchGraduateWorks(searchText);
+    private List<GraduateWork> searchByText(String text) {
+        List<String> result = googleDriveService.searchGraduateWorks(text);
+        return graduateWorkRepository
+                .findAll()
+                .stream()
+                .filter(document -> result.contains(document.getSelfHref()))
+                .collect(Collectors.toList());
     }
 }

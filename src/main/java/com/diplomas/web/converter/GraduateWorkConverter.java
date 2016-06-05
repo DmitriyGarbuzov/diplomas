@@ -77,7 +77,9 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
         dto.setSubject(entity.getSubject());
         dto.setSelfHref(entity.getSelfHref());
         dto.setFileName(entity.getFileName());
-        dto.setYear(entity.getYear());
+        dto.setControlOfNormsDate(entity.getControlOfNormsDate());
+        dto.setPreProtectionDate(entity.getPreProtectionDate());
+        dto.setProtectionDate(entity.getProtectionDate());
         dto.setHeadWork(Optional.ofNullable(entity.getHeadWork()).map(headWorkConverter::convert).orElse(null));
         dto.setDegree(Optional.ofNullable(entity.getDegree()).map(degreeConverter::convert).orElse(null));
         dto.setCathedra(Optional.ofNullable(entity.getCathedra()).map(cathedraConverter::convert).orElse(null));
@@ -91,8 +93,14 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
         if (!checkService.equals(dto.getSubject(), oldEntity.getSubject())) {
             oldEntity.setSubject(dto.getSubject());
         }
-        if (!checkService.equals(dto.getYear(), oldEntity.getYear())) {
-            oldEntity.setYear(oldEntity.getYear());
+        if (!checkService.equals(dto.getControlOfNormsDate(), oldEntity.getControlOfNormsDate())) {
+            oldEntity.setControlOfNormsDate(dto.getControlOfNormsDate());
+        }
+        if(!checkService.equals(dto.getPreProtectionDate(), oldEntity.getPreProtectionDate())) {
+            oldEntity.setPreProtectionDate(oldEntity.getPreProtectionDate());
+        }
+        if(!checkService.equals(dto.getProtectionDate(),oldEntity.getProtectionDate())) {
+            oldEntity.setProtectionDate(oldEntity.getProtectionDate());
         }
         if (!checkService.equals(dto.getDegree(), oldEntity.getDegree())) {
             oldEntity.setDegree(Optional.ofNullable(dto.getDegree()).map(degreeConverter.reverse()::convert).orElse(null));
@@ -125,9 +133,16 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
             oldEntity.setHeadWork(Optional.ofNullable(dto.getHeadWork()).map(headWorkConverter.reverse()::convert).orElse(null));
         }
         if (!checkService.equals(dto.getFile().getOriginalFilename(),oldEntity.getFileName())) {
-            googleDriveService.removeGraduateWork(oldEntity.getFileName());
-            oldEntity.setFileName(dto.getFile().getOriginalFilename());
-            oldEntity.setSelfHref(googleDriveService.uploadGraduateWork(dto.getFile()));
+            if(oldEntity.getFileName()!=null && !oldEntity.getFileName().isEmpty()) {
+                googleDriveService.removeGraduateWork(oldEntity.getFileName());
+            }
+            if(dto.getFile()!=null && !dto.getFile().getOriginalFilename().isEmpty()) {
+                oldEntity.setFileName(dto.getFile().getOriginalFilename());
+                oldEntity.setSelfHref(googleDriveService.uploadGraduateWork(dto.getFile()));
+            } else {
+                oldEntity.setFileName("");
+                oldEntity.setSelfHref("");
+            }
         }
         return oldEntity;
     }
@@ -136,14 +151,21 @@ public class GraduateWorkConverter extends Converter<GraduateWork, GraduateWorkD
         GraduateWork entity = new GraduateWork();
     
         entity.setSubject(dto.getSubject());
-        entity.setYear(dto.getYear());
+        entity.setControlOfNormsDate(dto.getControlOfNormsDate());
+        entity.setPreProtectionDate(dto.getPreProtectionDate());
+        entity.setProtectionDate(dto.getProtectionDate());
         entity.setDegree(Optional.ofNullable(dto.getDegree()).map(degreeConverter.reverse()::convert).orElse(null));
         entity.setStudent(Optional.ofNullable(dto.getStudent()).map(studentConverter.reverse()::convert).orElse(null));
         entity.setCathedra(Optional.ofNullable(dto.getCathedra()).map(cathedraConverter.reverse()::convert).orElse(null));
         entity.setGroup(Optional.ofNullable(dto.getGroup()).map(studentGroupConverter.reverse()::convert).orElse(null));
         entity.setHeadWork(Optional.ofNullable(dto.getHeadWork()).map(headWorkConverter.reverse()::convert).orElse(null));
-        entity.setFileName(dto.getFile().getOriginalFilename());
-        entity.setSelfHref(googleDriveService.uploadGraduateWork(dto.getFile()));
+        if(dto.getFile()!=null && !dto.getFile().getOriginalFilename().isEmpty()) {
+            entity.setFileName(dto.getFile().getOriginalFilename());
+            entity.setSelfHref(googleDriveService.uploadGraduateWork(dto.getFile()));
+        } else {
+            entity.setFileName("");
+            entity.setSelfHref("");
+        }
         return entity;
     }
 }

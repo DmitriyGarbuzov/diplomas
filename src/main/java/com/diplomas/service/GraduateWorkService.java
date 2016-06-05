@@ -85,11 +85,5 @@ public class GraduateWorkService {
 		graduateWorkRepository.deleteByUuid(uuid);
 		return dto;
 	}
-    
-    public List<GraduateWorkDTO> searchGraduateWorks(SearchDTO dto) {
-    	return googleDriveService.searchGraduateWorks(dto.getSearchText())
-    			.stream()
-    			.map(graduateWorkConverter::convert)
-    			.collect(Collectors.toList());
-    }
+
 }

@@ -22,57 +22,49 @@
 <body>
   <h2>Реєстрація</h2>
   <br>
-<form class="form-horizontal">
-  <div class="form-group">
-    <label class="control-label col-xs-3" for="lastName">Фамілія:</label>
-    <div class="col-xs-9">
-      <input type="text" class="form-control" id="lastName" placeholder="Фамілія">
-    </div>
+<div class="container">
+<c:if test="${!empty errorMessage}">
+  <div class="alert alert-success fade in">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>Помилка!</strong> ${errorMessage}.
   </div>
+</c:if>
+<c:url var="registration" value="/registration"></c:url>
+<form:form role="form" action="${registration}" method="POST"
+      commandName="user" class="form-horizontal">
   <div class="form-group">
-    <label class="control-label col-xs-3" for="firstName">Ім'я:</label>
+    <label class="control-label col-xs-3" for="firstName">Ім'я (Логин):</label>
     <div class="col-xs-9">
-      <input type="text" class="form-control" id="firstName" placeholder="Ім'я">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-xs-3" for="fatherName">По батькові:</label>
-    <div class="col-xs-9">
-      <input type="text" class="form-control" id="fatherName" placeholder="По батькові">
+      <form:input path="userName" type="text" class="form-control" id="firstName" placeholder="Ім'я"/>
     </div>
   </div>
   
   <div class="form-group">
     <label class="control-label col-xs-3" for="inputEmail">Email:</label>
     <div class="col-xs-9">
-      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+      <form:input path="email" type="email" class="form-control" id="inputEmail" placeholder="Email"/>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-xs-3" for="inputPassword">Пароль:</label>
     <div class="col-xs-9">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Ваш пароль">
+      <form:input path="password" type="password" class="form-control" id="inputPassword" placeholder="Ваш пароль"/>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-xs-3" for="confirmPassword">Підтвердіть пароль:</label>
     <div class="col-xs-9">
-      <input type="password" class="form-control" id="confirmPassword" placeholder="Введіть пароль повторно">
+      <form:input path="repeatPassword" type="password" class="form-control" id="confirmPassword" placeholder="Введіть пароль повторно"/>
     </div>
   </div>
-  
- 
-  
- 
-  
-   
   <br />
   <div class="form-group">
     <div class="col-xs-offset-3 col-xs-9">
-      <input type="submit" class="btn btn-primary" value="Зареєструвати">
-      <input type="reset" class="btn btn-default" value="Очистити форму">
+      <button type="submit" class="btn btn-primary">Зареєструвати</button>
+      <button type="reset" class="btn btn-default" >Очистити форму</button>
     </div>
   </div>
-</form>
+</form:form>
+</div>
 </body>
 </html>
