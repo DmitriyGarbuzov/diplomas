@@ -51,11 +51,13 @@ public class SearchService {
        return graduateWorkRepository
                 .findAll()
                 .stream()
-                .filter(document -> document.getSubject().toLowerCase().contains(text.toLowerCase()))
+                .filter(document -> document.getSubject().toLowerCase().contains(text.toLowerCase())
+                        || document.getSubject().toLowerCase().equals(text.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
     private List<GraduateWork> searchByKeys(String text) {
+
         return new ArrayList<>();
     }
 

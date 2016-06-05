@@ -106,7 +106,7 @@
                                 <th>Кафедра</th>
                                 <th>Група</th>
                                 <th>Керівник</th>
-                                <th>Рік</th>
+                                <th>Дата сдачі</th>
                                 <th>Текст роботи</th>
                             </tr>
                             </thead>
@@ -132,7 +132,7 @@
                                     <td>${graduateWork.headWork.surname}
                                             ${graduateWork.headWork.firstName}
                                             ${graduateWork.headWork.patronymic}</td>
-                                    <td>${graduateWork.year}</td>
+                                    <td>${graduateWork.protectionDate}</td>
                                     <td><a href="${graduateWork.selfHref}" target="_blank">${graduateWork.fileName}</a>
                                     </td>
                                 </tr>
