@@ -71,7 +71,7 @@
             <div class="col-sm-10">
                 <div class="radio">
                     <label> <form:radiobutton path="searchType" name="gridRadio1"
-                                              id="gridRadios1" value="1" checked="true"/>Пошук за Темою
+                                              id="gridRadios1" value="1" disabled="true" />Пошук за Темою
                     </label>
                 </div>
                 <div class="radio disabled">
@@ -81,7 +81,7 @@
                 </div>
                 <div class="radio disabled">
                     <label> <form:radiobutton path="searchType" name="gridRadio3"
-                                              id="gridRadios3" value="3" disabled="false"/> Пошук за текстом робіт
+                                              id="gridRadios3" value="3" disabled="false" checked="true"/> Пошук за текстом робіт
                     </label>
                 </div>
             </div>
