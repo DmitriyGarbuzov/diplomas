@@ -4,11 +4,13 @@ import com.diplomas.entity.User;
 import com.diplomas.entity.UserRole;
 import com.diplomas.repository.UserRepository;
 import com.diplomas.repository.UserRolesRepository;
+import com.diplomas.web.dto.SearchDTO;
 import com.diplomas.web.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,22 +32,25 @@ public class LoginController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
-        model.addAttribute("user", new UserDTO());
+        if (((BindingAwareModelMap) model).get("user") == null) {
+            model.addAttribute("user", new UserDTO());
+        }
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String register(@ModelAttribute("user") UserDTO dto, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("user", dto);
         if (!validEmail(dto)) {
-            redirectAttributes.addAttribute("errorMessage", "Юзер з таким email вже є");
+            redirectAttributes.addFlashAttribute("errorMessage", "Юзер з таким email вже є");
             return "redirect:/registration";
         }
         if (!validUserName(dto)) {
-            redirectAttributes.addAttribute("errorMessage", "Юзер з таким ім'ям вже є");
+            redirectAttributes.addFlashAttribute("errorMessage", "Юзер з таким ім'ям вже є");
             return "redirect:/registration";
         }
         if (!validPassword(dto)) {
-            redirectAttributes.addAttribute("errorMessage", "Паролі не співпадають");
+            redirectAttributes.addFlashAttribute("errorMessage", "Паролі не співпадають");
             return "redirect:/registration";
         }
         saveUser(dto);
@@ -56,6 +61,7 @@ public class LoginController {
         User user = new User();
         user.setEmail(dto.getEmail());
         user.setEnabled(1);
+        user.setUserName(dto.getUserName());
         user.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
         userRepository.save(user);
         UserRole role = new UserRole();

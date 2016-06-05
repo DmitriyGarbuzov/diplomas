@@ -21,7 +21,70 @@
     <link
             href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.css"
             rel='stylesheet' type='text/css'>
+    <style type="text/css">
 
+        .content_hide {
+            width: 100%;
+            /* Full Width */
+            height: 5px;
+            margin: -20px 0px 50px 0px;
+            background: #FFFFFF;
+            display: none;
+        }
+
+        .content_visible {
+            width: 100%;
+            /* Full Width */
+            height: 5px;
+            margin: -20px 0px 50px 0px;
+            background: #FFFFFF;
+            display: block;
+        }
+
+        .expand {
+            width: 100%;
+            height: 1px;
+            margin: 2px 0;
+            background: #504A4B;
+            position: absolute;
+            box-shadow: 0px 0px 10px 1px rgba(229, 228, 226,0.7);
+            -moz-animation: fullexpand 13s ease-out;
+            -webkit-animation: fullexpand 13s ease-out;
+        }
+
+        /* Full Width Animation Bar */
+        @-moz-keyframes fullexpand {
+            0% { width: 0px;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        @-webkit-keyframes fullexpand {
+            0% {
+                width: 0px;
+            }
+
+            100% {
+                width: 100%;
+            };
+        }
+    </style>
+    <script>
+        function processSave() {
+            document.getElementById("save").disabled = true;
+            document.getElementById("back").disabled = true;
+            document.getElementById('content').className = 'content_visible';
+            document.getElementById('mainForm').submit();
+        }
+        function main() {
+            document.getElementById('content').className = 'content_hide';
+        }
+        document.addEventListener("DOMContentLoaded", main);
+
+    </script>
 </head>
 <body>
 <!-- Header -->
@@ -45,10 +108,26 @@
             <li><a href="/search">Пошук</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Login</a></li>
+            <sec:authorize access="isAnonymous()">
+                <li><a href="/login">Login </a></li>
+                <li><a href="/registration">Registration </a></li>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <li><p></p></li>
+                <li><a href="#>"><%= request.getUserPrincipal().getName() %>
+                </a></li>
+                <li style="margin-top: 15px;margin-right: 5px;"><form:form id="log_f" action="${pageContext.request.contextPath}/logout" method="POST">
+                    <a href="javascript:;" title="logout"
+                       onclick="document.getElementById('log_f').submit();">Logout</a>
+                </form:form> </li>
+            </sec:authorize>
+
         </ul>
     </div>
 </nav>
+<div id="content">
+    <span class="expand"></span>
+</div>
 <!-- Body -->
 <c:url var="saveUpdateAction" value="/save"></c:url>
 <div class="container">
@@ -58,7 +137,7 @@
     <c:if test="${empty graduateWork.uuid}">
         <h2>Створення</h2>
     </c:if>
-    <form:form role="form" action="${saveUpdateAction}" method="POST"
+    <form:form id="mainForm" role="form" action="${saveUpdateAction}" method="POST"
                commandName="graduateWork" enctype="multipart/form-data">
         <c:if test="${!empty addEditErrorMess}">
             <div class="alert alert-danger fade in">
@@ -160,12 +239,12 @@
         <br/>
         <c:if test="${!empty graduateWork.uuid}">
             <form:hidden path="uuid"/>
-            <button type="submit" class="btn btn-success">Оновити</button>
+            <button id="save" type="submit" onclick="processSave()" class="btn btn-success">Оновити</button>
         </c:if>
         <c:if test="${empty graduateWork.uuid}">
-            <button type="submit" class="btn btn-success">Зберегти</button>
+            <button id="save" type="submit" onclick="processSave()" class="btn btn-success">Зберегти</button>
         </c:if>
-        <button type="button" onclick="history.go(-1);" class="btn btn-danger">Назад</button>
+        <button id="back" type="button" onclick="history.go(-1);" class="btn btn-danger">Назад</button>
     </form:form>
     <br/> <br/> <br/> <br/> <br/> <br/>
 </div>

@@ -40,7 +40,7 @@
     <br/>
     <br/>
     <c:if test="${param.error ne null}">
-        <div class="alert alert-danger"><strong>Внимание</strong> Не правильный пароль либо имейл.</div>
+        <div class="alert alert-danger"><strong>Внимание</strong> Не правильный пароль либо username.</div>
     </c:if>
     <c:if test="${param.logout ne null}">
         <div class="alert alert-danger"><strong>Внимание</strong> Вы вышли из аккаунта.</div>

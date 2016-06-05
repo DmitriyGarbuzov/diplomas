@@ -40,7 +40,21 @@
             <li><a href="/search">Пошук</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/login">Login</a></li>
+            <sec:authorize access="isAnonymous()">
+                <li><a href="/login">Login </a></li>
+                <li><a href="/registration">Registration </a></li>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <li><p></p></li>
+                <li><a href="#>"><%= request.getUserPrincipal().getName() %>
+                </a></li>
+                <li style="margin-top: 15px;margin-right: 5px;"><form:form id="log_f"
+                                                                           action="${pageContext.request.contextPath}/logout"
+                                                                           method="POST">
+                    <a href="javascript:;" title="logout"
+                       onclick="document.getElementById('log_f').submit();">Logout</a>
+                </form:form></li>
+            </sec:authorize>
         </ul>
     </div>
 </nav>
@@ -56,18 +70,18 @@
             <label class="col-sm-2">Тип пошуку</label>
             <div class="col-sm-10">
                 <div class="radio">
-                    <label> <form:radiobutton path="searchType"  name="gridRadio1"
-                                   id="gridRadios1" value="1" checked="true"/>Пошук за Темою
+                    <label> <form:radiobutton path="searchType" name="gridRadio1"
+                                              id="gridRadios1" value="1" checked="true"/>Пошук за Темою
                     </label>
                 </div>
                 <div class="radio disabled">
                     <label> <form:radiobutton path="searchType" name="gridRadio2"
-                                   id="gridRadios2" value="2" disabled="true"/> Пошук за ключовими словами
+                                              id="gridRadios2" value="2" disabled="true"/> Пошук за ключовими словами
                     </label>
                 </div>
                 <div class="radio disabled">
                     <label> <form:radiobutton path="searchType" name="gridRadio3"
-                                   id="gridRadios3" value="3" disabled="false"/> Пошук за текстом робіт
+                                              id="gridRadios3" value="3" disabled="false"/> Пошук за текстом робіт
                     </label>
                 </div>
             </div>
@@ -100,7 +114,8 @@
                             <c:forEach items="${graduateWorkList}" var="graduateWork">
                                 <tr>
                                     <td align="center">
-                                        <a href="<c:url value='/edit/${graduateWork.uuid}' />" class="btn btn-default"><em
+                                        <a href="<c:url value='/edit/${graduateWork.uuid}' />"
+                                           class="btn btn-default"><em
                                                 class="fa fa-pencil"></em></a>
                                         <form:form action="/remove/${graduateWork.uuid}" method="post">
                                         <button type="submit" class="btn btn-danger"><em
@@ -118,7 +133,8 @@
                                             ${graduateWork.headWork.firstName}
                                             ${graduateWork.headWork.patronymic}</td>
                                     <td>${graduateWork.year}</td>
-                                    <td><a href="${graduateWork.selfHref}" target="_blank">${graduateWork.fileName}</a></td>
+                                    <td><a href="${graduateWork.selfHref}" target="_blank">${graduateWork.fileName}</a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>

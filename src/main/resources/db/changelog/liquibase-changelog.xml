@@ -98,10 +98,10 @@
 			INSERT into cathedra (id, cathedra_name,faculty_id) values (38, 'Кафедра іноземних мов',7);
 			INSERT into cathedra (id, cathedra_name,faculty_id) values (39, 'Кафедра української мови та загального мовознавства',7);
 
-			<!--Insert admin user {cstuadminlogin, dtupz}-->
+			<!--Insert admin user {cstuadminlogin, chdtupz}-->
 			INSERT into users (userid, username,email, password, enabled) VALUES (1, 'cstuadminlogin', 'diplomaproject2016@gmail.com', '$2a$04$hg3IULrQUQ/U0A6Zqvs7me8St3oeMQ0YG6oEca.pT0xWGDi7JuHJm',1);
 			INSERT into user_roles (user_role_id, userid, role) VALUES (1, 1, 'ROLE_ADMIN');
-			INSERT into user_roles (user_role_id, userid, role) VALUES (2, 2, 'ROLE_USER');
+			INSERT into user_roles (user_role_id, userid, role) VALUES (2, 1, 'ROLE_USER');
 		</sql>
 	</changeSet>
 </databaseChangeLog>

@@ -24,7 +24,7 @@
   <br>
 <div class="container">
 <c:if test="${!empty errorMessage}">
-  <div class="alert alert-success fade in">
+  <div class="alert alert-danger">
     <a href="#" class="close" data-dismiss="alert">&times;</a>
     <strong>Помилка!</strong> ${errorMessage}.
   </div>
@@ -35,26 +35,26 @@
   <div class="form-group">
     <label class="control-label col-xs-3" for="firstName">Ім'я (Логин):</label>
     <div class="col-xs-9">
-      <form:input path="userName" type="text" class="form-control" id="firstName" placeholder="Ім'я"/>
+      <form:input path="userName" type="text" class="form-control" id="firstName" placeholder="Логин" required="true"/>
     </div>
   </div>
   
   <div class="form-group">
     <label class="control-label col-xs-3" for="inputEmail">Email:</label>
     <div class="col-xs-9">
-      <form:input path="email" type="email" class="form-control" id="inputEmail" placeholder="Email"/>
+      <form:input path="email" type="email" class="form-control" id="inputEmail" placeholder="Email" required="true"/>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-xs-3" for="inputPassword">Пароль:</label>
     <div class="col-xs-9">
-      <form:input path="password" type="password" class="form-control" id="inputPassword" placeholder="Ваш пароль"/>
+      <form:input path="password" type="password" class="form-control" id="inputPassword" placeholder="Ваш пароль" required="true"/>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-xs-3" for="confirmPassword">Підтвердіть пароль:</label>
     <div class="col-xs-9">
-      <form:input path="repeatPassword" type="password" class="form-control" id="confirmPassword" placeholder="Введіть пароль повторно"/>
+      <form:input path="repeatPassword" type="password" class="form-control" id="confirmPassword" placeholder="Введіть пароль повторно" required="true"/>
     </div>
   </div>
   <br />

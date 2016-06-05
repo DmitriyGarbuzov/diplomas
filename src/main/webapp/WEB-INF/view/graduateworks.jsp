@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Дипломи</title>
     <meta charset="utf-8">
@@ -46,14 +45,17 @@
         <ul class="nav navbar-nav navbar-right">
 
             <sec:authorize access="isAnonymous()">
-                <li><a href="login">Login </a></li>
-                <li><a href="registration">Registration </a></li>
+                <li><a href="/login">Login </a></li>
+                <li><a href="/registration">Registration </a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
                 <li><p></p></li>
                 <li><a href="#>"><%= request.getUserPrincipal().getName() %>
                 </a></li>
-                <li><a href="<c:url value="/j_spring_security_logout"/>">Logout</a></li>
+                <li style="margin-top: 15px;margin-right: 5px;"><form:form id="log_f" action="${pageContext.request.contextPath}/logout" method="POST">
+                    <a href="javascript:;" title="logout"
+                       onclick="document.getElementById('log_f').submit();">Logout</a>
+                </form:form> </li>
             </sec:authorize>
 
         </ul>
@@ -88,21 +90,23 @@
                             <h3 class="panel-title"></h3>
                         </div>
                         <div class="col col-xs-6 text-right">
-                  <sec:authorize access="hasRole('ROLE_ADMIN')">
-       <a href="/add" class="btn btn-primary">Створити</a>
-       </sec:authorize> 
+                            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                <a href="/add" class="btn btn-primary">Створити</a>
+                            </sec:authorize>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body">
-                <div class="input-group"> <span class="input-group-addon">Фільтр</span>
+                    <div class="input-group"><span class="input-group-addon">Фільтр</span>
 
-   						 <input id="filter" type="text" class="form-control" placeholder="Ключове слово...">
-					</div>
-                    <table class="table table-striped table-bordered table-list"  data-toggle="table">
+                        <input id="filter" type="text" class="form-control" placeholder="Ключове слово...">
+                    </div>
+                    <table class="table table-striped table-bordered table-list" data-toggle="table">
                         <thead>
                         <tr>
-                        <sec:authorize access="hasRole('ROLE_ADMIN')">    <th><em class="fa fa-cog"></em></th></sec:authorize>
+                            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                <th><em class="fa fa-cog"></em></th>
+                            </sec:authorize>
                             <th data-field="theme" data-sortable="true">Тема</th>
                             <th data-field="student" data-sortable="true">Студент</th>
                             <th data-field="faculty" data-sortable="true">Факультет</th>
@@ -113,15 +117,19 @@
                             <th>Текст роботи</th>
                         </tr>
                         </thead>
-                        <tbody  class="searchable">
+                        <tbody class="searchable">
                         <c:forEach items="${graduateWorkList}" var="graduateWork">
                             <tr>
-                                    <sec:authorize access="hasRole('ROLE_ADMIN')"> <td align="center">
-                                    <a href="<c:url value='/edit/${graduateWork.uuid}' />" class="btn btn-default"><em
-                                            class="fa fa-pencil"></em></a>
-                                    <a href="#myModal_${graduateWork.uuid}" role="button" class="btn btn-danger" data-toggle="modal"><em
-                                            class="fa fa-trash"></em></a>
-                                </td></sec:authorize>
+                                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                    <td align="center">
+                                        <a href="<c:url value='/edit/${graduateWork.uuid}' />"
+                                           class="btn btn-default"><em
+                                                class="fa fa-pencil"></em></a>
+                                        <a href="#myModal_${graduateWork.uuid}" role="button" class="btn btn-danger"
+                                           data-toggle="modal"><em
+                                                class="fa fa-trash"></em></a>
+                                    </td>
+                                </sec:authorize>
                                 <td>${graduateWork.subject}</td>
                                 <td>${graduateWork.student.surname}
                                         ${graduateWork.student.firstName}

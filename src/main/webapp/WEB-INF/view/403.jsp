@@ -5,6 +5,6 @@
     <title>ACESS DENIED PAGE</title>
 </head>
 <body>
-<h3>Not enough rights</h3>
+<h3>Not enough rights!! <button class="btn btn-danger" onclick="history.go(-1);" >Назад</button></h3>
 </body>
 </html>
